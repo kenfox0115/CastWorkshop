@@ -40,9 +40,10 @@ Local preparation on Windows with Python 3.13 passed 82 source compilation check
 23 workflow JSON checks, 61 smoke checks, and 436 unit/integration tests (one symlink
 test skipped). Isolated real start/restart/stop also passed with worker and Telegram
 disabled. These are offline/synthetic results, not GPU acceptance evidence.
-Python 3.11/3.12 Linux CI is configured but has not run on GitHub. Neither interpreter
-is installed in the preparation environment. Linux/macOS GPU paths, complete fresh
-setup, and recent stop changes across operating systems still need acceptance evidence.
+Python 3.11/3.12 Ubuntu CI runs on pull requests; consult the checks for the exact
+accepted revision before claiming results. Neither interpreter is installed in the
+local preparation environment. Linux/macOS GPU paths, complete fresh setup, and
+recent stop changes across operating systems still need owner-managed acceptance evidence.
 
 Image identity consistency, speech accuracy, motion, and voice-trimming boundaries
 require live review. Two-character performance plans span 5–10 seconds. Python
