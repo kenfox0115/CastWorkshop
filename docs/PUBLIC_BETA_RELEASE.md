@@ -1,8 +1,9 @@
-# CastWorkshop 0.9 Public Beta — draft release notes
+# CastWorkshop 0.9 Public Beta — source-beta release notes
 
-Planned tag: `v0.9.0-beta.1` · Version: `0.9.0-beta.1` · Type: **Pre-release**
+Source version: `0.9.0-beta.1` · Status: **Public source beta**
 
-This is a local release draft, not an announcement that a release has been published.
+The repository is public. Clone it or use **Code → Download ZIP** to install from source.
+A packaged GitHub Release and version tag have not yet been published.
 
 ## Create characters that live beyond a single prompt
 
@@ -32,7 +33,9 @@ AI services, then run `python start.py`. Leave Telegram blank for browser-only u
 Image models need approximately 22.2 GB and video/MOSS voice models 45.4 GB:
 67.6 GB combined before reuse, excluding Ollama and Whisper models, environments,
 ComfyUI, caches, and generated media. A compatible GPU is required for the selected
-workflows. No validated minimum VRAM or hardware matrix is published.
+workflows. A suggested starting configuration is 16 GB GPU memory (or equivalent) and 64 GB
+system RAM. These are planning targets; no validated minimum VRAM or hardware matrix
+is published.
 
 ## Validation and limitations
 
@@ -40,9 +43,9 @@ Local preparation on Windows with Python 3.13 passed 82 source compilation check
 23 workflow JSON checks, 61 smoke checks, and 436 unit/integration tests (one symlink
 test skipped). Isolated real start/restart/stop also passed with worker and Telegram
 disabled. These are offline/synthetic results, not GPU acceptance evidence.
-Python 3.11/3.12 Ubuntu CI runs on pull requests; consult the checks for the exact
-accepted revision before claiming results. Neither interpreter is installed in the
-local preparation environment. Linux/macOS GPU paths, complete fresh setup, and
+Python 3.11/3.12 Ubuntu CI runs on main pushes and pull requests; consult
+[Actions](https://github.com/kenfox0115/CastWorkshop/actions) for the exact revision.
+Both jobs passed for the initial public source revision `5bb0446`. Linux/macOS GPU paths, complete fresh setup, and
 recent stop changes across operating systems still need owner-managed acceptance evidence.
 
 Image identity consistency, speech accuracy, motion, and voice-trimming boundaries
@@ -65,6 +68,6 @@ are not included. Operators must review those terms and applicable content rules
 Use the repository's bug/feature issue templates with sanitized diagnostics.
 Send vulnerabilities through the private reporting process in SECURITY.md.
 
-Planned downloadable assets: `CastWorkshop-v0.9.0-beta.1.zip` and its
+Future packaged release assets: `CastWorkshop-v0.9.0-beta.1.zip` and its
 `.zip.sha256` checksum. The ZIP includes `release_manifest.json` with per-file hashes.
 Attach only the archive generated from the revision that passes acceptance checks.

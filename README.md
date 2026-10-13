@@ -39,9 +39,8 @@ SQLite service queues durable work so long GPU jobs do not block Telegram pollin
 
 ## Screenshots and demonstrations
 
-Documentation TODO before launch: add an owner-approved screenshot of the light-themed
-interface and a short, representative demonstration using non-private characters and media.
-No demonstration assets are currently included.
+See [the CastWorkshop website](https://castworkshop.com/#experience) for product screenshots
+and [the product preview](https://castworkshop.com/#demo). A video demonstration is not yet available.
 
 ## Quick start
 
@@ -81,6 +80,10 @@ Windows, macOS, and Linux use the same Python entry points. GPU workflow support
 depends on what ComfyUI and the selected models support on the host.
 
 ### Hardware and storage
+
+- **Suggested starting configuration:** 16 GB GPU memory (or equivalent) and 64 GB
+  system RAM, subject to the selected models and backend. These are planning targets,
+  not validated minimum requirements or a compatibility guarantee.
 
 - **Model downloads:** approximately 22.2 GB for images and 45.4 GB for video/MOSS
   voice, or 67.6 GB combined before reuse, excluding Ollama and Whisper models. Setup searches ComfyUI's active model folders and skips exact filenames with matching
@@ -148,9 +151,9 @@ Stop or restart it with `python stop.py` or `python restart.py`. Logs are writte
 
 ## Release status
 
-**CastWorkshop 0.9 Public Beta** (`0.9.0-beta.1`) is the initial source candidate,
-prepared for private acceptance before public release. The eventual tag is
-`v0.9.0-beta.1`; the source archive is `CastWorkshop-v0.9.0-beta.1.zip`.
+**CastWorkshop 0.9 Public Beta** (`0.9.0-beta.1`) is publicly available as source.
+Clone this repository or use GitHub's **Code → Download ZIP**, then follow the quick start.
+A packaged GitHub Release and version tag have not yet been published.
 See [CHANGELOG.md](CHANGELOG.md) for changes
 and known limitations. Offline tests do not establish rendered speech or motion quality;
 GPU generation and fresh-install checks remain part of release QA.
@@ -165,7 +168,7 @@ GPU generation and fresh-install checks remain part of release QA.
 - Dependency versions are not fully locked. Selected voice trimming can fail when a
   safe speech boundary cannot be identified.
 
-See [draft beta release notes](docs/PUBLIC_BETA_RELEASE.md) and the
+See [source-beta release notes](docs/PUBLIC_BETA_RELEASE.md) and the
 [launch checklist](docs/GITHUB_LAUNCH.md).
 
 See [Performance planning](docs/PERFORMANCE_PLANNER.md) for timeline, fallback and
