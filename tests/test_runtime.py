@@ -1,5 +1,6 @@
 """Offline process tests. Children only execute disposable test code."""
 from pathlib import Path
+from types import SimpleNamespace
 import subprocess
 import sys
 import tempfile
@@ -97,7 +98,7 @@ class RuntimeTests(unittest.TestCase):
                          (runtime.ROOT / "vps/jobs.db").resolve())
 
     def test_posix_launcher_starts_a_new_session_with_no_stdin(self):
-        with patch.object(start.os, "name", "posix"):
+        with patch.object(start, "os", SimpleNamespace(name="posix")):
             options = start.supervisor_launch_options()
         self.assertTrue(options["start_new_session"])
         self.assertEqual(options["stdin"], subprocess.DEVNULL)
@@ -107,7 +108,7 @@ class RuntimeTests(unittest.TestCase):
         fake = Mock(side_effect=[OSError("breakaway denied"), Mock(pid=77)])
         flags = {"DETACHED_PROCESS": 8, "CREATE_NEW_PROCESS_GROUP": 16,
                  "CREATE_BREAKAWAY_FROM_JOB": 32}
-        with patch.object(start.os, "name", "nt"), \
+        with patch.object(start, "os", SimpleNamespace(name="nt")), \
              patch.multiple(start.subprocess, create=True, **flags):
             process, mode = start.launch_supervisor(Mock(), env={}, popen=fake)
         self.assertEqual(process.pid, 77)
