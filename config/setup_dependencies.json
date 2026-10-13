@@ -1,0 +1,418 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "name": "krea2_turbo_fp8_scaled.safetensors",
+      "group": "images",
+      "destination": "diffusion_models/krea2_turbo_fp8_scaled.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/3da2809e72fa04ba266e3b51c2a366fd04500b5a/diffusion_models/krea2_turbo_fp8_scaled.safetensors",
+      "size": 13141730784,
+      "sha256": "eb4dd8c612cfd10f64f25b057e6e6bbcb5737c94a7372177e456dbf7579502f1",
+      "source": "https://huggingface.co/Comfy-Org/Krea-2",
+      "license_url": "https://huggingface.co/Comfy-Org/Krea-2"
+    },
+    {
+      "name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "group": "images",
+      "destination": "text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/eb1eddd3983a54678545a9b2c178c5853b30f7be/text_encoders/qwen3vl_4b_fp8_scaled.safetensors",
+      "size": 5242467968,
+      "sha256": "54bd5144df0bbc25dd6ccadfcb826b521445a1b06ae5a42570bdd2974ca87094",
+      "source": "https://huggingface.co/Comfy-Org/Krea-2",
+      "license_url": "https://huggingface.co/Comfy-Org/Krea-2"
+    },
+    {
+      "name": "qwen_image_vae.safetensors",
+      "group": "images",
+      "destination": "vae/qwen_image_vae.safetensors",
+      "url": "https://huggingface.co/Comfy-Org/Krea-2/resolve/eb1eddd3983a54678545a9b2c178c5853b30f7be/vae/qwen_image_vae.safetensors",
+      "size": 253806246,
+      "sha256": "a70580f0213e67967ee9c95f05bb400e8fb08307e017a924bf3441223e023d1f",
+      "source": "https://huggingface.co/Comfy-Org/Krea-2",
+      "license_url": "https://huggingface.co/Comfy-Org/Krea-2"
+    },
+    {
+      "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "group": "video",
+      "destination": "text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4/resolve/8c5abfed61e1b6a170240792b65253fba1a65b7b/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "size": 15687142551,
+      "sha256": "35a88d51044231fe332301d7a62aa81e3f2cba62febeb446e2c1e3e0ef76f2c6",
+      "source": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4",
+      "license_url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4"
+    },
+    {
+      "name": "minimax_h3_audio_vae_fp32.safetensors",
+      "group": "video",
+      "destination": "vae/minimax_h3_audio_vae_fp32.safetensors",
+      "url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4/resolve/8c5abfed61e1b6a170240792b65253fba1a65b7b/vae/minimax_h3_audio_vae_fp32.safetensors",
+      "size": 605254808,
+      "sha256": "8e505d95dd1561d47abd43d4238fd40d9bb1ae9e147ed0a4cba778d76ae4db48",
+      "source": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4",
+      "license_url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4"
+    },
+    {
+      "name": "minimax_h3_video_vae_fp16.safetensors",
+      "group": "video",
+      "destination": "vae/minimax_h3_video_vae_fp16.safetensors",
+      "url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4/resolve/8c5abfed61e1b6a170240792b65253fba1a65b7b/vae/minimax_h3_video_vae_fp16.safetensors",
+      "size": 5207808496,
+      "sha256": "7c1f131492e7eddacaac9069a61b81bdd39de5cc96561e677c5eab1cdce5e522",
+      "source": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4",
+      "license_url": "https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4"
+    },
+    {
+      "name": "added_tokens.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/added_tokens.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/added_tokens.json",
+      "size": 704,
+      "sha256": "9dfb40d3a3f8654c8af17771d767a494e973b9a33d5c3aeffa1b21f77db8e6d3",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "chat_template.jinja",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/chat_template.jinja",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/chat_template.jinja",
+      "size": 352,
+      "sha256": "894e3ace884e212ae34e1f46063686e7ebcc8b2fa0153af4579dfa5685f63184",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "config.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/config.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/config.json",
+      "size": 2203,
+      "sha256": "5b6ccfbf309a5844c130d09c9b5fa8b9eef55db27f1b7072695483b6f5524685",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "configuration_moss_tts.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/configuration_moss_tts.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/configuration_moss_tts.py",
+      "size": 5584,
+      "sha256": "257842f2fa90124307408f36d55b74e135ee32b7afacbe30280964f7feb329d1",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "inference_utils.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/inference_utils.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/inference_utils.py",
+      "size": 5092,
+      "sha256": "12cdf3260114e44c8cba816782f743779ab621e0ba4047e59a3f3579cfcb0e26",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "merges.txt",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/merges.txt",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/merges.txt",
+      "size": 1671853,
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "model.safetensors",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/model.safetensors",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/model.safetensors",
+      "size": 4228278872,
+      "sha256": "dbe345257ff9f6cc84195bed830a268b39d5e0b728ff3ba90e715150a49b16d4",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "modeling_moss_tts.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/modeling_moss_tts.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/modeling_moss_tts.py",
+      "size": 25329,
+      "sha256": "666d7320f93ce6b1c1f6ed4dba6fd4b9520a082a90fa7a17211efd83247d28a0",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "processing_moss_tts.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/processing_moss_tts.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/processing_moss_tts.py",
+      "size": 37220,
+      "sha256": "16dda5233f9f752518d07a6b780d6555945b48547fba0b4e7faf6eb2c4ed0038",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "processor_config.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/processor_config.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/processor_config.json",
+      "size": 145,
+      "sha256": "6821d4805f10fb8b5cc743c021215097e03f1a25f7c220dfc4fb0d62b5dc97e0",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "special_tokens_map.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/special_tokens_map.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/special_tokens_map.json",
+      "size": 631,
+      "sha256": "55cbd0665670e196ce105db3f0d787e5eb35bce235fcb2bd50acbdd60c1e39c6",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "tokenizer.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/tokenizer.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/tokenizer.json",
+      "size": 11422691,
+      "sha256": "cb3c8fa82993d515469c2800cc455bff4aaa3c4fed9da1f2b0c0668c304f335a",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "tokenizer_config.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/tokenizer_config.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/tokenizer_config.json",
+      "size": 5501,
+      "sha256": "87b1f37a4a73e4c4b61637a1446763e8bdea274347f0418cd5c68ead488c8ea4",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "vocab.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-VoiceGenerator/vocab.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator/resolve/97521ec2b6f3ec5026ac1f5751f8fc302d82c2d4/vocab.json",
+      "size": 2776833,
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator"
+    },
+    {
+      "name": "__init__.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/__init__.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/__init__.py",
+      "size": 52,
+      "sha256": "ed0b4910a5e53b1dfc3234cfcf96e2c6890d339f9134a3dfed8481d01b3768fd",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "config.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/config.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/config.json",
+      "size": 6601,
+      "sha256": "0f669e288d39c9c0ffae4e39babe5167b57e89d3132f0785655d1096a8da8e45",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "configuration_moss_audio_tokenizer.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/configuration_moss_audio_tokenizer.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/configuration_moss_audio_tokenizer.py",
+      "size": 12933,
+      "sha256": "349b7ff7e1b3f160f9c80df9a0311672b326b8b73e90459122fb39e6878962bf",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "model-00001-of-00002.safetensors",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/model-00001-of-00002.safetensors",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/model-00001-of-00002.safetensors",
+      "size": 4998259168,
+      "sha256": "037f441ed30a0ab59f6049de83b824a1b3bd6feb7dbd46c3fbca41fc2f649f28",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "model-00002-of-00002.safetensors",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/model-00002-of-00002.safetensors",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/model-00002-of-00002.safetensors",
+      "size": 2100202560,
+      "sha256": "a187d73d2cda1c2d0676586d9d03c09c0a5813450266af32029c871493fc9582",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "model.safetensors.index.json",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/model.safetensors.index.json",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/model.safetensors.index.json",
+      "size": 148113,
+      "sha256": "e107e83fee64adc3ccdb993975290cecb00fcf7d72cdaa388011abad16bcc82d",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "modeling_moss_audio_tokenizer.py",
+      "group": "video",
+      "destination": "TTS/moss_tts/MOSS-Audio-Tokenizer/modeling_moss_audio_tokenizer.py",
+      "url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer/resolve/3cd226ba2947efa357ef453bcad111b6eafba782/modeling_moss_audio_tokenizer.py",
+      "size": 70906,
+      "sha256": "65cae7744845f1b8ac65957e918cea508efe331a38e87b882b7530b6c8d7caa5",
+      "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer",
+      "license_url": "https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer"
+    },
+    {
+      "name": "minimax_h3_hybrid_fl2va_ref2va_b25-49_nvfp4.safetensors",
+      "group": "video",
+      "destination": "diffusion_models/minimax_h3_hybrid_fl2va_ref2va_b25-49_nvfp4.safetensors",
+      "url": "https://huggingface.co/jfar-z/MiniMax-H3-FL2VA-Ref2VA-Hybrid-NVFP4/resolve/6f9b51a274f1c680d737c328fe23627fc66cda9b/minimax_h3_hybrid_fl2va_ref2va_b25-49_nvfp4.safetensors",
+      "size": 12528636800,
+      "sha256": "ddd194e1675d53e51f96c3e0c9cda75b0108ad2b62a035eab9be06214236e7d7",
+      "source": "https://huggingface.co/jfar-z/MiniMax-H3-FL2VA-Ref2VA-Hybrid-NVFP4",
+      "license_url": "https://huggingface.co/jfar-z/MiniMax-H3-FL2VA-Ref2VA-Hybrid-NVFP4"
+    },
+    {
+      "name": "krea2_identity_edit_v1_2.safetensors",
+      "group": "images",
+      "destination": "loras/krea2_identity_edit_v1_2.safetensors",
+      "url": "https://huggingface.co/conradlocke/krea2-identity-edit/resolve/89e9e7a09ee2e5c9331e952063d79b1b8a703280/krea2_identity_edit_v1_2.safetensors",
+      "size": 1828256432,
+      "sha256": "6adf9a69cc9502d286db7b69964d37da7e9cfe4b05b4d004bc275f087d3fd3cf",
+      "source": "https://huggingface.co/conradlocke/krea2-identity-edit",
+      "license_url": "https://huggingface.co/conradlocke/krea2-identity-edit"
+    },
+    {
+      "name": "u2net_human_seg.onnx",
+      "group": "images",
+      "destination": "models/u2net_human_seg.onnx",
+      "storage": "project",
+      "url": "https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_human_seg.onnx",
+      "size": 175997641,
+      "sha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+      "source": "https://github.com/danielgatis/rembg",
+      "license_url": "https://github.com/xuebinqin/U-2-Net"
+    },
+    {
+      "name": "snofs_krea_v1_4.safetensors",
+      "group": "images",
+      "destination": "loras/snofs_krea_v1_4.safetensors",
+      "url": "https://huggingface.co/Ashen3/SNOFS/resolve/11c39dcd0758b6f047e933ea00fe019570ab1485/Krea2/snofs_krea_v1_4.safetensors",
+      "size": 1562410296,
+      "sha256": "767888edde83003f14cf930f13f174fe2a7431e252a515ddf04bd93d382a8932",
+      "source": "https://huggingface.co/Ashen3/SNOFS",
+      "license_url": "https://huggingface.co/Ashen3/SNOFS"
+    }
+  ],
+  "custom_nodes": [
+    {
+      "name": "RES4LYF",
+      "repository": "https://github.com/ClownsharkBatwing/RES4LYF",
+      "revision": "26036f647ca15d3048a193daf99a40cecfc3820d",
+      "url": "https://codeload.github.com/ClownsharkBatwing/RES4LYF/zip/26036f647ca15d3048a193daf99a40cecfc3820d",
+      "size": 212882118,
+      "sha256": "d9e759d3a4fd7c6d2f06bee370ae448411fa256f81f81d9c41b3b0d503fef0a6",
+      "groups": [
+        "images"
+      ],
+      "classes": [
+        "ClownsharKSampler_Beta"
+      ],
+      "requirements": [
+        "opencv-python>=4.8",
+        "matplotlib>=3.8",
+        "pywavelets>=1.5"
+      ]
+    },
+    {
+      "name": "ComfyUI-Unload-Models",
+      "repository": "https://github.com/willblaschko/ComfyUI-Unload-Models",
+      "revision": "bf0ffda636e4f51ca99e66ea0d39a0eb5152bd26",
+      "url": "https://codeload.github.com/willblaschko/ComfyUI-Unload-Models/zip/bf0ffda636e4f51ca99e66ea0d39a0eb5152bd26",
+      "size": 13739,
+      "sha256": "64e7694e906b2033aac2d59aa4356ee8546d3107cb93734c67271c0cbb48b976",
+      "groups": [
+        "images",
+        "video"
+      ],
+      "classes": [
+        "UnloadAllModels"
+      ],
+      "requirements": []
+    },
+    {
+      "name": "tts_audio_suite",
+      "repository": "https://github.com/diodiogod/TTS-Audio-Suite",
+      "revision": "d12a4c286f58a31f28e47a8f46e2ef7e6eb3c5c2",
+      "url": "https://codeload.github.com/diodiogod/TTS-Audio-Suite/zip/d12a4c286f58a31f28e47a8f46e2ef7e6eb3c5c2",
+      "size": 71555171,
+      "sha256": "08184c991b705ecf98f175a19cc71e789471edc1a6cbeb881d01d5e2494648ee",
+      "groups": [
+        "video"
+      ],
+      "classes": [
+        "MossTTSEngineNode",
+        "UnifiedVoiceDesignerNode"
+      ],
+      "requirements": [
+        "transformers>=5.3,<6",
+        "accelerate>=1.12",
+        "peft>=0.18.1",
+        "orjson>=3.11",
+        "tiktoken>=0.12",
+        "soundfile>=0.12",
+        "scipy>=1.11",
+        "librosa>=0.11",
+        "pydub>=0.25",
+        "sounddevice>=0.4",
+        "einops>=0.7",
+        "dacite>=1.8",
+        "omegaconf>=2.3",
+        "loguru>=0.7",
+        "huggingface-hub>=0.34",
+        "safetensors>=0.6.2",
+        "requests>=2.31",
+        "PyYAML>=6",
+        "psutil>=5.9",
+        "num2words>=0.5",
+        "unidecode>=1.3",
+        "langcodes>=3.3"
+      ]
+    },
+    {
+      "name": "comfyui-krea2edit",
+      "revision": "86f886dac23013d88996e3a2e99093ba44d322fb",
+      "url": "https://codeload.github.com/lbouaraba/comfyui-krea2edit/zip/86f886dac23013d88996e3a2e99093ba44d322fb",
+      "sha256": "ff1102a1d17f597d8b100afd17bd489a7910325729483398f1385c541f18c171",
+      "size": 54134,
+      "groups": [
+        "images"
+      ],
+      "requirements": [],
+      "source": "https://github.com/lbouaraba/comfyui-krea2edit",
+      "classes": [
+        "Krea2EditModelPatch",
+        "Krea2EditGroundedEncode"
+      ]
+    }
+  ],
+  "excluded": [],
+  "python_dependencies": {
+    "images": [
+      "onnxruntime>=1.18",
+      "opencv-python>=4.8"
+    ],
+    "video": [
+      "imageio-ffmpeg>=0.6"
+    ]
+  }
+}

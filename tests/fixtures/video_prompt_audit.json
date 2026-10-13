@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "single-01",
+    "group": "single",
+    "request": "Alex walks out of the surf onto dry sand.",
+    "expect": "water to land; no return toward water",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-02",
+    "group": "single",
+    "request": "Alex walks into the surf from dry sand.",
+    "expect": "land to water",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-03",
+    "group": "single",
+    "request": "Alex backs away from the door while facing it.",
+    "expect": "distance from door increases; face toward door",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-04",
+    "group": "single",
+    "request": "Alex approaches the door without touching it.",
+    "expect": "distance decreases; no opening",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-05",
+    "group": "single",
+    "request": "Alex stands still and looks toward the window.",
+    "expect": "gaze only; no walking",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-06",
+    "group": "single",
+    "request": "Alex faces the camera while walking away from it.",
+    "expect": "backward travel; face visible",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-07",
+    "group": "single",
+    "request": "Alex walks toward the camera with their back facing it.",
+    "expect": "backward travel; back visible",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-08",
+    "group": "single",
+    "request": "Alex exits the elevator and stops in the corridor.",
+    "expect": "elevator to corridor; stop",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-09",
+    "group": "single",
+    "request": "Alex enters the elevator and stays inside.",
+    "expect": "corridor to elevator",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-10",
+    "group": "single",
+    "request": "Alex does not enter the doorway; they wait beside it.",
+    "expect": "no entry; stationary",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-11",
+    "group": "single",
+    "request": "Alex carries a box away from the table.",
+    "expect": "box travels with Alex away",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-12",
+    "group": "single",
+    "request": "Alex slides the cup toward the camera without moving their feet.",
+    "expect": "cup moves; person stationary",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-13",
+    "group": "single",
+    "request": "The camera moves toward Alex, who stands still.",
+    "expect": "camera translation only",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-14",
+    "group": "single",
+    "request": "Alex turns their head left without turning their torso.",
+    "expect": "head only",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-15",
+    "group": "single",
+    "request": "Alex turns around once and stops facing away from the camera.",
+    "expect": "one turn; final back view",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-16",
+    "group": "single",
+    "request": "Alex sits down, then raises their right hand.",
+    "expect": "sit before right-hand raise",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-17",
+    "group": "single",
+    "request": "Alex raises their left hand, then sits down.",
+    "expect": "left-hand raise before sit",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-18",
+    "group": "single",
+    "request": "Alex picks up the red cup, leaving the blue cup untouched.",
+    "expect": "red object only",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-19",
+    "group": "single",
+    "request": "Alex places the key inside the bowl.",
+    "expect": "key ends inside bowl",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-20",
+    "group": "single",
+    "request": "Alex removes the key from the bowl.",
+    "expect": "key ends outside bowl",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-21",
+    "group": "single",
+    "request": "Alex opens the umbrella but stays in the same place.",
+    "expect": "umbrella opens; stationary",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-22",
+    "group": "single",
+    "request": "Alex closes the book without speaking.",
+    "expect": "book closes; no voice",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-23",
+    "group": "single",
+    "request": "Alex silently reads a sign marked \"EXIT\".",
+    "expect": "text is signage; not dialogue",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-24",
+    "group": "single",
+    "request": "Alex points to a painting titled \"Come closer\" without speaking.",
+    "expect": "title not dialogue; silence",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-25",
+    "group": "single",
+    "request": "Alex whispers \"Stay here.\" while remaining still.",
+    "expect": "exact whispered words; no travel",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-26",
+    "group": "single",
+    "request": "Alex says \"Don't move the cup.\" and leaves the cup untouched.",
+    "expect": "exact words; cup stationary",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-27",
+    "group": "single",
+    "request": "Alex says \"First, wait. Then, listen.\"",
+    "expect": "exact punctuation/content; no extra speech",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-28",
+    "group": "single",
+    "request": "Alex says \"I checked every door, counted all six keys, and left the blue envelope exactly where you asked.\"",
+    "expect": "no dialogue shortening",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-29",
+    "group": "single",
+    "request": "Alex laughs once, then says \"That worked.\"",
+    "expect": "one requested laugh before exact line",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-30",
+    "group": "single",
+    "request": "Alex mouths words silently; no audible speech.",
+    "expect": "silent mouth movement",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-31",
+    "group": "single",
+    "request": "Alex waves once. No dialogue, music, or other vocal sounds.",
+    "expect": "one wave; no voice or music",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-32",
+    "group": "single",
+    "request": "Alex hums softly without saying any words.",
+    "expect": "humming only; no invented words",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-33",
+    "group": "single",
+    "request": "Alex plays a single piano note. No background music.",
+    "expect": "one diegetic note only",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-34",
+    "group": "single",
+    "request": "Alex walks along a hallway; add quiet non-diegetic piano music.",
+    "expect": "hallway; requested music",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-35",
+    "group": "single",
+    "request": "Alex stays in the kitchen under unchanged daylight.",
+    "expect": "no relocation or lighting change",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-36",
+    "group": "single",
+    "request": "Alex stands against a plain gray wall with empty hands.",
+    "expect": "no invented props",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-37",
+    "group": "single",
+    "request": "Alex wears a blue jacket throughout and folds their arms.",
+    "expect": "jacket retained",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-38",
+    "group": "single",
+    "request": "Alex removes only their hat and holds it in their left hand.",
+    "expect": "hat removal only; correct hand",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-39",
+    "group": "single",
+    "request": "Alex in swimwear adjusts their sunglasses beside a pool.",
+    "expect": "swimwear retained; no escalation",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-40",
+    "group": "single",
+    "request": "Alex in evening clothes blows a kiss to the camera.",
+    "expect": "solo flirtation; no extra person",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-41",
+    "group": "single",
+    "request": "Alex takes exactly two steps and stops.",
+    "expect": "two steps then stop",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-42",
+    "group": "single",
+    "request": "Alex walks from screen left to screen right.",
+    "expect": "screen-space left to right",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-43",
+    "group": "single",
+    "request": "Alex moves from screen right to screen left while looking right.",
+    "expect": "travel left; gaze right",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-44",
+    "group": "single",
+    "request": "Alex leaves the cup on the table and walks away.",
+    "expect": "cup remains; Alex travels",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-45",
+    "group": "single",
+    "request": "Alex stays left of the doorway throughout the shot.",
+    "expect": "spatial location; no exit interpretation",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-46",
+    "group": "single",
+    "request": "Alex moves toward the door, stops, then walks away from it.",
+    "expect": "approach then retreat; sequence",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-47",
+    "group": "single",
+    "request": "Alex reaches toward the shelf without stepping closer.",
+    "expect": "arm reach only",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-48",
+    "group": "single",
+    "request": "Alex lowers their right hand while lifting their left hand.",
+    "expect": "simultaneous distinct limbs",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "single-49",
+    "group": "single",
+    "request": "Alex jogs in place without changing location.",
+    "expect": "in-place motion",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "single-50",
+    "group": "single",
+    "request": "Alex stands still. Use one continuous fixed shot with no cuts or zoom.",
+    "expect": "stationary; fixed camera",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-01",
+    "group": "multi",
+    "request": "Alex walks out of the surf while Robin waits on dry sand.",
+    "expect": "separate people; Alex water to land; Robin stationary",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-02",
+    "group": "multi",
+    "request": "Robin enters the surf while Alex stays on shore.",
+    "expect": "Robin land to water; Alex stationary",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-03",
+    "group": "multi",
+    "request": "Alex approaches Robin while Robin walks away from Alex.",
+    "expect": "distinct opposing actor actions",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-04",
+    "group": "multi",
+    "request": "Alex faces Robin but walks backward away from Robin.",
+    "expect": "facing and travel differ",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-05",
+    "group": "multi",
+    "request": "Alex remains still while Robin looks toward the camera.",
+    "expect": "gaze only for Robin",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-06",
+    "group": "multi",
+    "request": "Alex hands the red cup to Robin.",
+    "expect": "transfer Alex to Robin",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-07",
+    "group": "multi",
+    "request": "Robin hands the blue cup to Alex.",
+    "expect": "transfer Robin to Alex",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-08",
+    "group": "multi",
+    "request": "Alex holds a red cup; Robin holds a blue cup. They do not exchange them.",
+    "expect": "ownership retained",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-09",
+    "group": "multi",
+    "request": "Alex sits first; Robin sits afterward.",
+    "expect": "Alex then Robin",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-10",
+    "group": "multi",
+    "request": "Robin raises a left hand while Alex lowers a right hand.",
+    "expect": "actor and limb ownership",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-11",
+    "group": "multi",
+    "request": "Alex stands on screen left and Robin on screen right throughout.",
+    "expect": "positions retained",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-12",
+    "group": "multi",
+    "request": "Alex and Robin swap screen positions without touching.",
+    "expect": "two paths; no contact",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-13",
+    "group": "multi",
+    "request": "Alex walks behind Robin while Robin stays still.",
+    "expect": "Alex motion behind stationary Robin",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-14",
+    "group": "multi",
+    "request": "Alex opens the door; Robin walks through it.",
+    "expect": "separate actions",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-15",
+    "group": "multi",
+    "request": "Robin closes the book while Alex opens the box.",
+    "expect": "objects bound to correct people",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-16",
+    "group": "multi",
+    "request": "Alex and Robin silently watch a sign reading \"Stop here\".",
+    "expect": "no dialogue from sign",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-17",
+    "group": "multi",
+    "request": "Alex points at a book called \"Say hello\"; Robin remains silent.",
+    "expect": "title not spoken",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-18",
+    "group": "multi",
+    "request": "Alex says \"Hello.\" Robin stays silent.",
+    "expect": "Alex only exact line",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-19",
+    "group": "multi",
+    "request": "Robin says \"Hello.\" Alex stays silent.",
+    "expect": "Robin only exact line",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-20",
+    "group": "multi",
+    "request": "Alex says \"Ready?\" Robin says \"Ready.\"",
+    "expect": "Alex then Robin exact words",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-21",
+    "group": "multi",
+    "request": "Robin says \"Your turn.\" Alex says \"Thanks.\"",
+    "expect": "Robin then Alex",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-22",
+    "group": "multi",
+    "request": "Alex says \"One.\" Robin says \"Two.\" Alex says \"Three.\"",
+    "expect": "A B A exact order",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-23",
+    "group": "multi",
+    "request": "Robin says \"First.\" Alex says \"Second.\" Robin says \"Third.\"",
+    "expect": "B A B exact order",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-24",
+    "group": "multi",
+    "request": "Alex whispers \"Keep quiet.\" Robin whispers \"I will.\"",
+    "expect": "whispered delivery both",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-25",
+    "group": "multi",
+    "request": "Alex shouts \"Watch out!\" Robin says \"I see it.\"",
+    "expect": "shout A; neutral B",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-26",
+    "group": "multi",
+    "request": "Alex says \"Wait.\" Then Alex opens the box. Robin remains still.",
+    "expect": "speech before Alex action",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-27",
+    "group": "multi",
+    "request": "Alex opens the box, then says \"Done.\" Robin remains still.",
+    "expect": "action before speech",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-28",
+    "group": "multi",
+    "request": "Robin nods before saying \"Yes.\" Alex stays silent.",
+    "expect": "Robin nod before line",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-29",
+    "group": "multi",
+    "request": "Alex says \"Robin, stay there.\" Robin remains still.",
+    "expect": "vocative not speaker confusion",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-30",
+    "group": "multi",
+    "request": "Robin says \"Alex said no.\" Alex remains silent.",
+    "expect": "embedded name not speaker confusion",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-31",
+    "group": "multi",
+    "request": "Alex says \"Don't touch it.\" Robin leaves the cup alone.",
+    "expect": "negation preserved",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-32",
+    "group": "multi",
+    "request": "Alex says \"I counted the keys, checked the windows, and left the package by the blue door.\" Robin listens.",
+    "expect": "exact long line",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-33",
+    "group": "multi",
+    "request": "Alex: \"We should wait.\" Robin: \"Agreed.\"",
+    "expect": "colon syntax A B",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-34",
+    "group": "multi",
+    "request": "\"I'm ready,\" says Robin. Alex stays silent.",
+    "expect": "quote-before attribution B",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-35",
+    "group": "multi",
+    "request": "Alex says \"Why?\" Robin replies \"Because.\"",
+    "expect": "reply attribution B",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-36",
+    "group": "multi",
+    "request": "Alex and Robin hold hands without speaking.",
+    "expect": "two separate adults; silent",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-37",
+    "group": "multi",
+    "request": "Alex in swimwear waves while Robin in a jacket sits.",
+    "expect": "distinct wardrobe actions",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-38",
+    "group": "multi",
+    "request": "Alex blows Robin a kiss. Robin smiles silently.",
+    "expect": "no invented vocalization",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-39",
+    "group": "multi",
+    "request": "Alex walks toward the camera; Robin walks away from it.",
+    "expect": "opposite directions actor bound",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-40",
+    "group": "multi",
+    "request": "Alex looks left; Robin walks left.",
+    "expect": "gaze versus locomotion",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-41",
+    "group": "multi",
+    "request": "Alex takes two steps; Robin takes one step.",
+    "expect": "actor-specific counts",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-42",
+    "group": "multi",
+    "request": "Alex carries the box; Robin opens the gate.",
+    "expect": "no object transfer",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-43",
+    "group": "multi",
+    "request": "Alex stays outside while Robin enters the room.",
+    "expect": "inside/outside ownership",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-44",
+    "group": "multi",
+    "request": "Alex exits the room while Robin enters it.",
+    "expect": "opposite traversal",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-45",
+    "group": "multi",
+    "request": "Alex and Robin remain still as the camera pans left.",
+    "expect": "camera only",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-46",
+    "group": "multi",
+    "request": "Alex and Robin stand apart with no touching or speech.",
+    "expect": "no contact or dialogue",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-47",
+    "group": "multi",
+    "request": "Alex says \"Good night.\" Robin waves without answering.",
+    "expect": "one line; silent response",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-48",
+    "group": "multi",
+    "request": "Robin says \"Stay.\" Alex approaches the window but not Robin.",
+    "expect": "correct travel target",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "multi-49",
+    "group": "multi",
+    "request": "Alex says \"The word is exit.\" Robin stays silent.",
+    "expect": "dialogue not spatial movement instruction",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "multi-50",
+    "group": "multi",
+    "request": "Alex smiles at Robin under steady daylight. No music or voices.",
+    "expect": "stable light; no audio invention",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-01",
+    "group": "continuation",
+    "request": "Alex continues walking out of the surf onto the sand.",
+    "expect": "advance water to land; no replay",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-02",
+    "group": "continuation",
+    "request": "Alex continues walking into the surf.",
+    "expect": "advance land to water",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-03",
+    "group": "continuation",
+    "request": "Alex turns to face the camera.",
+    "expect": "rotate if needed; do not assume already facing",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-04",
+    "group": "continuation",
+    "request": "Alex turns away from the camera.",
+    "expect": "final away facing",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-05",
+    "group": "continuation",
+    "request": "Alex turns toward the camera, then turns away.",
+    "expect": "ordered two turns; final away",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-06",
+    "group": "continuation",
+    "request": "Alex walks toward the camera while looking away.",
+    "expect": "travel toward; gaze away",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-07",
+    "group": "continuation",
+    "request": "Alex walks away from the camera while facing it.",
+    "expect": "backward travel; facing maintained",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-08",
+    "group": "continuation",
+    "request": "Alex looks toward the camera without turning their torso.",
+    "expect": "eyes/head only; torso unchanged",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-09",
+    "group": "continuation",
+    "request": "Alex turns their back to the camera then looks over a shoulder.",
+    "expect": "back view with head turn",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-10",
+    "group": "continuation",
+    "request": "Alex stops walking and stands still.",
+    "expect": "stop source motion",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-11",
+    "group": "continuation",
+    "request": "Alex takes two more steps and stops.",
+    "expect": "two new steps; no replay",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-12",
+    "group": "continuation",
+    "request": "Alex lowers the already raised right hand.",
+    "expect": "lower not raise again",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-13",
+    "group": "continuation",
+    "request": "Alex opens their closed left hand.",
+    "expect": "open only left hand",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-14",
+    "group": "continuation",
+    "request": "Alex releases the cup already in their right hand onto the table.",
+    "expect": "existing object transfer",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-15",
+    "group": "continuation",
+    "request": "Alex picks up the cup shown on the table.",
+    "expect": "table to hand; no new cup",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-16",
+    "group": "continuation",
+    "request": "Alex leaves the existing cup untouched.",
+    "expect": "cup unchanged",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-17",
+    "group": "continuation",
+    "request": "Alex removes the hat already visible in the source frame.",
+    "expect": "requested wardrobe transition allowed",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-18",
+    "group": "continuation",
+    "request": "Alex puts the hat held in their hand back on their head.",
+    "expect": "explicit restoring garment permitted",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-19",
+    "group": "continuation",
+    "request": "Alex zips up the open jacket visible in the frame.",
+    "expect": "explicit re-close allowed",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-20",
+    "group": "continuation",
+    "request": "Alex unties the scarf visible in the frame.",
+    "expect": "specific garment motion allowed",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-21",
+    "group": "continuation",
+    "request": "Alex remains in the same swimwear and waves.",
+    "expect": "no outfit change",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-22",
+    "group": "continuation",
+    "request": "Alex turns to show the back of their unchanged jacket.",
+    "expect": "rotate body; clothing retained",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-23",
+    "group": "continuation",
+    "request": "Alex steps from screen left toward screen right.",
+    "expect": "screen-space direction",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-24",
+    "group": "continuation",
+    "request": "Alex steps right while looking left.",
+    "expect": "travel and gaze distinct",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-25",
+    "group": "continuation",
+    "request": "Alex backs away from the doorway.",
+    "expect": "separation increases",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-26",
+    "group": "continuation",
+    "request": "Alex approaches the doorway without entering.",
+    "expect": "approach; no entry",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-27",
+    "group": "continuation",
+    "request": "Alex exits the room through the existing open door.",
+    "expect": "requested continuous relocation",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-28",
+    "group": "continuation",
+    "request": "Alex enters the adjacent room through the visible doorway.",
+    "expect": "traversal allowed; continuous shot",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-29",
+    "group": "continuation",
+    "request": "Alex remains still while the camera slowly moves closer.",
+    "expect": "requested camera movement",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-30",
+    "group": "continuation",
+    "request": "Keep Alex still and slowly zoom out.",
+    "expect": "requested zoom; no character motion",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-31",
+    "group": "continuation",
+    "request": "Pan left to follow Alex walking left.",
+    "expect": "camera pan plus actor travel",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-32",
+    "group": "continuation",
+    "request": "Alex bends down; keep the camera fixed.",
+    "expect": "pose changes; camera fixed",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-33",
+    "group": "continuation",
+    "request": "Alex sits in the chair already visible.",
+    "expect": "sit; no new chair",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-34",
+    "group": "continuation",
+    "request": "Alex stands up from the visible chair.",
+    "expect": "rise; no replay sitting",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-35",
+    "group": "continuation",
+    "request": "Alex says \"This is the next part.\"",
+    "expect": "new exact line once",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-36",
+    "group": "continuation",
+    "request": "Alex says \"Do not repeat what I said before.\"",
+    "expect": "exact new line; no old speech",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-37",
+    "group": "continuation",
+    "request": "Alex whispers \"Stay close.\"",
+    "expect": "preserve whisper delivery",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-38",
+    "group": "continuation",
+    "request": "Alex shouts \"Over here!\"",
+    "expect": "requested shout",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-39",
+    "group": "continuation",
+    "request": "Alex says \"I checked the windows and locked the door; now we can finally leave together.\"",
+    "expect": "no shortening",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-40",
+    "group": "continuation",
+    "request": "Alex stays completely silent and smiles.",
+    "expect": "no spoken line",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-41",
+    "group": "continuation",
+    "request": "Alex nods without speaking or making other vocal sounds.",
+    "expect": "silence",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-42",
+    "group": "continuation",
+    "request": "Alex laughs once without speaking.",
+    "expect": "requested laugh permitted",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-43",
+    "group": "continuation",
+    "request": "Alex softly hums without words.",
+    "expect": "requested humming permitted",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-44",
+    "group": "continuation",
+    "request": "Continue with only the existing ocean ambience and no music.",
+    "expect": "ambience only",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-45",
+    "group": "continuation",
+    "request": "Add quiet piano music while Alex stays still.",
+    "expect": "requested non-diegetic music",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-46",
+    "group": "continuation",
+    "request": "Alex says \"Wait.\" Then waves.",
+    "expect": "speech before wave",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-47",
+    "group": "continuation",
+    "request": "Alex waves, then says \"Now.\"",
+    "expect": "wave before speech",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-48",
+    "group": "continuation",
+    "request": "Alex keeps facing away until the last moment, then turns to face the camera.",
+    "expect": "delayed rotation not throughout facing",
+    "content_mode": "nsfw",
+    "aspect_mode": "cinematic"
+  },
+  {
+    "id": "continuation-49",
+    "group": "continuation",
+    "request": "Alex reaches toward the camera with a hand but stays in place.",
+    "expect": "hand only; no torso rotation assumption",
+    "content_mode": "sfw",
+    "aspect_mode": "vertical"
+  },
+  {
+    "id": "continuation-50",
+    "group": "continuation",
+    "request": "Alex closes their eyes and breathes quietly without moving.",
+    "expect": "minimal motion; no new action",
+    "content_mode": "sfw",
+    "aspect_mode": "cinematic"
+  }
+]

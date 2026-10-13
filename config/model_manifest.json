@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "models": [
+    {"engine":"ollama","category":"chat","name":"qwen3-14b-64k","required_for":["chat","media planning"],"download":"ollama","source":"huihui_ai/qwen3-abliterated:14b-v2-q8_0","modelfile":"config/ollama/qwen3-14b-64k.Modelfile"},
+    {"engine":"comfyui","category":"unet","name":"krea2_turbo_fp8_scaled.safetensors","required_for":["look candidates","identity images"],"download":"setup"},
+    {"engine":"comfyui","category":"unet","name":"minimax_h3_hybrid_fl2va_ref2va_b25-49_nvfp4.safetensors","required_for":["videos"],"download":"setup"},
+    {"engine":"comfyui","category":"clip","name":"qwen3vl_4b_fp8_scaled.safetensors","required_for":["images"],"download":"setup"},
+    {"engine":"comfyui","category":"clip","name":"qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors","required_for":["videos"],"download":"setup"},
+    {"engine":"comfyui","category":"vae","name":"qwen_image_vae.safetensors","required_for":["images"],"download":"setup"},
+    {"engine":"comfyui","category":"vae","name":"minimax_h3_video_vae_fp16.safetensors","required_for":["videos"],"download":"setup"},
+    {"engine":"comfyui","category":"vae","name":"minimax_h3_audio_vae_fp32.safetensors","required_for":["videos"],"download":"setup"},
+    {"engine":"comfyui","category":"lora","name":"krea2_identity_edit_v1_2.safetensors","required_for":["identity images"],"download":"setup"},
+    {"engine":"comfyui","category":"lora","name":"snofs_krea_v1_4.safetensors","required_for":["identity images"],"download":"setup"},
+    {"engine":"comfyui","category":"managed","name":"MOSS Voice Design 1.7B and MOSS-Audio-Tokenizer","required_for":["voice samples"],"download":"setup","check":"manual"}
+  ]
+}
