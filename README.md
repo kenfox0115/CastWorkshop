@@ -1,14 +1,19 @@
 # CastWorkshop
 
-**Build a persistent local cast of AI characters, then turn them into conversations,
-voices, images, and multi-character video scenes.**
+*Gen local. Share global.*
 
-CastWorkshop is an open-source, local-first character and media environment. Create
-characters, talk with them, give them voices, and place them in scenes. It brings
-saved profiles, identity and voice references, conversation context, and media
-creation into one workflow, so a new scene can start from the cast you already built.
+**Create characters that live beyond a single prompt.**
 
-[Requirements](#requirements) | [Install](#install) |
+CastWorkshop is a local-first character studio for creating persistent AI characters
+with personalities, appearances, voices, and conversation histories. Characters can
+participate in conversations, images, and generated video scenes.
+
+Separately installed **Ollama** and **ComfyUI** services provide the underlying local
+generation capabilities. Saved identity and voice references connect each new scene
+to the cast you already built. This open-source beta is a source distribution, not
+a standalone installer.
+
+[Requirements](#requirements) | [Quick start](#quick-start) |
 [Getting started](docs/GETTING_STARTED.md) | [Release status](#release-status) |
 [Security](SECURITY.md)
 
@@ -31,6 +36,24 @@ creation into one workflow, so a new scene can start from the cast you already b
 Ollama writes the conversation and plans media. ComfyUI runs the image workflows,
 MOSS voice generation, and MiniMax H3 talking-video workflows. A local Flask and
 SQLite service queues durable work so long GPU jobs do not block Telegram polling.
+
+## Screenshots and demonstrations
+
+Documentation TODO before launch: add an owner-approved screenshot of the light-themed
+interface and a short, representative demonstration using non-private characters and media.
+No demonstration assets are currently included.
+
+## Quick start
+
+1. Install Python 3.11 or newer, Ollama, and a suitable ComfyUI installation.
+2. Clone or download this repository, open its folder, and run `python setup_project.py`.
+   Select the dependencies you need; model downloads are large. Leave Telegram blank
+   for browser-only use. Restart ComfyUI after adding custom nodes.
+3. Start Ollama and ComfyUI, then run `python start.py`.
+4. Open the printed web URL, choose **+ New**, and create a character.
+
+Use `python scripts/inspect_env.py` to check services. See [setup details](#setup-details),
+[requirements](#requirements), and [Getting started](docs/GETTING_STARTED.md) for troubleshooting.
 
 ## Components
 
@@ -59,8 +82,8 @@ depends on what ComfyUI and the selected models support on the host.
 
 ### Hardware and storage
 
-- **Model downloads:** approximately 42.5 GB for images and 45.4 GB for video/MOSS
-  voice, or 87.9 GB combined before reuse. Setup searches ComfyUI's active model folders and skips exact filenames with matching
+- **Model downloads:** approximately 22.2 GB for images and 45.4 GB for video/MOSS
+  voice, or 67.6 GB combined before reuse, excluding Ollama and Whisper models. Setup searches ComfyUI's active model folders and skips exact filenames with matching
   sizes (0.1% tolerance, capped at 1 MiB), without hashing models. Allow additional space for ComfyUI, Python environments, temporary
   files, and generated media. See [the full inventory](docs/MODELS.md).
 - **Validation:** This beta's offline suite has been exercised on Windows. A completed beta
@@ -70,7 +93,7 @@ depends on what ComfyUI and the selected models support on the host.
   Linux. GPU support depends on ComfyUI, the models and their backend. macOS/Linux
   GPU paths remain untested in this release evidence.
 
-## Install
+## Setup details
 
 Clone or download the repository into a directory named `CastWorkshop`, then run:
 
@@ -100,8 +123,8 @@ and enabled only in adult mode. Model downloads are checked by size
 and resumable; restart ComfyUI after installing nodes. See `docs/MODELS.md` for
 publisher terms and any required download tokens. The web Settings panel can
 check the selected Ollama model and the workflow files visible to ComfyUI. Look
-candidates use `krea2_turbo_int8_convrot.safetensors`. Native identity images and
-scene insertion use `krea2_turbo_fp8_scaled.safetensors`; both are installed by
+candidates, native identity images and scene insertion use
+`krea2_turbo_fp8_scaled.safetensors`, installed by
 the image dependency group.
 
 For media that should remain in one setting, select a character and use **Scene** in
@@ -131,6 +154,19 @@ prepared for private acceptance before public release. The eventual tag is
 See [CHANGELOG.md](CHANGELOG.md) for changes
 and known limitations. Offline tests do not establish rendered speech or motion quality;
 GPU generation and fresh-install checks remain part of release QA.
+
+### Known limitations
+
+- No built-in HTTP login or HTTPS; use local-only access or a trusted network.
+- Minimum VRAM and a known-working hardware matrix are not established. Python entry
+  points are intended to be portable; Linux/macOS GPU acceptance remains unverified.
+- Two-character continuations are currently motion-only; supported performance plans
+  span 5–10 seconds. Identity, speech, and motion quality need live review.
+- Dependency versions are not fully locked. Selected voice trimming can fail when a
+  safe speech boundary cannot be identified.
+
+See [draft beta release notes](docs/PUBLIC_BETA_RELEASE.md) and the
+[launch checklist](docs/GITHUB_LAUNCH.md).
 
 See [Performance planning](docs/PERFORMANCE_PLANNER.md) for timeline, fallback and
 audio-boundary behavior in two-character videos.

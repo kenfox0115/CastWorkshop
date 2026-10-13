@@ -1,8 +1,14 @@
 # Security
 
-Report security issues privately to the repository owner rather than opening a public
-issue. Include reproduction steps and the affected revision without including live
-Telegram tokens, generated private media, or user databases.
+Report security issues privately rather than opening a public issue. If private
+vulnerability reporting is enabled, use the repository's **Security → Report a
+vulnerability** button or [private advisory form](https://github.com/kenfox0115/CastWorkshop/security/advisories/new).
+The owner must enable and verify that channel when the repository becomes public,
+before announcing the beta release. If the button
+is unavailable, use a private contact method explicitly listed by the owner on
+their GitHub profile; do not post exploit details publicly to request contact.
+Include the affected revision, reproduction steps, and impact without live tokens,
+private generated media, or databases. No response-time commitment is currently published.
 
 Secrets belong only in `.env`, which is ignored by Git. Rotate a Telegram token
 immediately if it appears in a log, screenshot, commit, or shared archive.
@@ -15,3 +21,9 @@ network and restrict inbound access with your operating-system firewall. Public 
 and transport security; do not expose port 8787 directly to the public internet. Ollama and
 ComfyUI can remain bound to localhost. Back up `vps/jobs.db` and generated media
 according to your own privacy needs.
+
+The API can modify characters, settings and service endpoints, configure Telegram,
+queue GPU work, and retrieve stored media. LAN access grants these capabilities to
+other reachable clients; it is not a multi-user permission system. Local-first
+does not mean every operation stays offline: setup downloads dependencies and models,
+and optional Telegram transport sends content through Telegram.

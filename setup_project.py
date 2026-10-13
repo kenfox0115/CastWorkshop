@@ -18,6 +18,9 @@ import sys
 import time
 from pathlib import Path
 
+if sys.version_info < (3, 11):
+    raise SystemExit("CastWorkshop requires Python 3.11 or newer.")
+
 if __name__ == "__main__" and "--setup-log-child" not in sys.argv:
     from scripts.setup_logging import run_logged
     sys.exit(run_logged(__file__))

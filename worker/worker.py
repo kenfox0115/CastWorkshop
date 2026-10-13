@@ -1647,7 +1647,7 @@ def main():
                 continue
 
             _log_text = job["payload"].get("prompt") or job["payload"].get("motion_prompt", "")
-            print(f"[worker] got job {job["id"]} ({job["job_type"]}): {_log_text[:60]!r}", flush=True)
+            print(f"[worker] got job {job['id']} ({job['job_type']}): {_log_text[:60]!r}", flush=True)
             _active_settings = job["payload"].get("settings_snapshot") or {}
             #TRACK_ENTER_JOB {job["id"]}
             current_model = get_current_model()

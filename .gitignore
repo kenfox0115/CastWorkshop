@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
 .coverage
 htmlcov/
 
@@ -10,6 +14,12 @@ htmlcov/
 .env
 .env.*
 !.env.example
+.netrc
+.pypirc
+*.pem
+*.key
+*.p12
+*.pfx
 
 # Hermes / runtime state
 logs/

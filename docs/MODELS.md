@@ -74,6 +74,26 @@ to third-party models. Setup displays publisher links before asking for agreemen
 to download under those publishers' terms. Some community repositories do not
 provide explicit license metadata; consult their publisher pages for permitted use.
 
+### Publisher terms and service use
+
+The application source's Apache-2.0 license does not grant rights to its models.
+Publisher metadata currently identifies [Krea2](https://huggingface.co/Comfy-Org/Krea-2)
+and [MiniMax H3](https://huggingface.co/lilcheaty/MiniMax-H3-NVFP4) under their respective
+community licenses, and [MOSS VoiceGenerator](https://huggingface.co/OpenMOSS-Team/MOSS-VoiceGenerator)
+as Apache-2.0. Review the exact downloaded revisions and upstream/base-model terms
+before relying on those labels for a particular use.
+
+[SNOFS](https://huggingface.co/Ashen3/SNOFS) publishes a separate personal-use model
+license. Its stated restrictions include weight redistribution, derivative models,
+and running public/commercial generation services without a separate license.
+Do not interpret CastWorkshop's LAN or Telegram support as permission to operate
+such a service. Confirm applicable terms with the publisher before offering hosted
+access. Output permissions and service permissions are distinct.
+
+Custom nodes, voice dependencies, and recognition models also retain their own
+licenses. Publisher metadata is not a legal clearance; the release owner must review
+the pinned third-party terms, attribution obligations, and intended deployment.
+
 For gated Hugging Face files, set `HF_TOKEN` in your environment after accepting the
 publisher's access conditions. Tokens are not printed or written into manifests.
 Authentication failures produce manual download links, and other files continue.

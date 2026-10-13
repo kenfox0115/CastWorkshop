@@ -15,10 +15,13 @@ VERSION = (ROOT / "VERSION").read_text(encoding="ascii").strip()
 DEFAULT_NAME = f"CastWorkshop-v{VERSION}"
 RELEASE_LABEL = "CastWorkshop 0.9 Public Beta"
 ROOT_FILES = ('.env.example', '.gitattributes', '.gitignore', 'AGENTS.md',
-              'CONTRIBUTING.md', 'CHANGELOG.md', 'VERSION', '.github/PULL_REQUEST_TEMPLATE.md', 'LICENSE', 'README.md', 'SECURITY.md',
+              'CONTRIBUTING.md', 'CHANGELOG.md', 'VERSION', '.github/PULL_REQUEST_TEMPLATE.md',
+              '.github/ISSUE_TEMPLATE/bug_report.md', '.github/ISSUE_TEMPLATE/feature_request.md',
+              '.github/workflows/offline.yml', 'LICENSE', 'README.md', 'SECURITY.md',
               'start.py', 'stop.py', 'restart.py', 'setup_project.py')
 DOCS = ('GETTING_STARTED.md', 'IMAGE_DEFAULTS.md', 'IMAGE_PROMPTS.md',
-        'MODELS.md', 'RELEASE_CHECKLIST.md', 'PERFORMANCE_PLANNER.md', 'VOICE_SELECTION.md')
+        'MODELS.md', 'RELEASE_CHECKLIST.md', 'PERFORMANCE_PLANNER.md', 'VOICE_SELECTION.md',
+        'PUBLIC_BETA_RELEASE.md', 'GITHUB_LAUNCH.md')
 SCRIPTS = ('__init__.py', 'build_release.py', 'clear_stuck_jobs.py', 'comfy_setup.py',
            'inspect_env.py', 'isolate_identity.py', 'model_manifest.py',
            'recovery_report.py', 'run_checks.py', 'runtime.py', 'setup_logging.py',

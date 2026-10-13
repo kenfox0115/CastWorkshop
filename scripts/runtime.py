@@ -110,7 +110,7 @@ def resource_identity(url):
     host = (u.hostname or "localhost").lower()
     if host in ("localhost", "127.0.0.1", "::1"):
         host = "loopback"
-    return f"gpu:{host}:{u.port or (443 if u.scheme == "https" else 80)}"
+    return f"gpu:{host}:{u.port or (443 if u.scheme == 'https' else 80)}"
 
 
 class Heartbeat:
