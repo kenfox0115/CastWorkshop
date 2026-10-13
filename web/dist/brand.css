@@ -1,0 +1,77 @@
+/* CastWorkshop light theme */
+:root{color-scheme:light;--ink:#172728;--muted:#617171;--line:#dbe5e3;--amber:#337f83;--panel:#f5f8f7;--panel-strong:#fff;font-family:Inter,system-ui,sans-serif}
+html,body{background:#fff;color:var(--ink)}
+body{background:#fff}
+header{background:#fff;border-bottom:1px solid #dce6e4;box-shadow:0 4px 18px #173a3a0a}
+.brand span{color:#173233}
+#service{color:#287a6d}
+main{background:#fff}
+aside{background:#f5f8f7;border-right:1px solid #dce6e4}
+.label{color:#337f83}
+.cast-head button{color:#246e72;background:#fff;border-color:#bdd4d1}
+.character{color:#203233}
+.character:hover{background:#eaf2f0}
+.character.active{background:#e1efed;border-color:#6ea7a4;box-shadow:inset 3px 0 #337f83}
+.avatar{color:#fff;background:linear-gradient(145deg,#337f83,#1c5559);background-position:50% 18%}
+.chat{background:#fff}
+.chat-head{background:#fff;border-bottom-color:#e3eae9}
+h1{color:#172728}
+#mode,.character small{color:#617171}
+.messages{background:#fff}
+.bubble small{color:#337f83}
+.bubble p{color:#203233;border-color:#dce6e4;background:#f4f7f6;box-shadow:0 5px 16px #183b3b08}
+.bubble.user p{color:#173233;background:#e5f1ef;border-color:#c6ddda}
+.empty{color:#697a79}
+.compose{background:#fff;border-top-color:#dce6e4;box-shadow:0 -8px 24px #183b3b08}
+.tools button{color:#526564;background:#f5f8f7;border-color:#d6e2df}
+.tools button.active{color:#fff;background:#337f83;border-color:#337f83}
+textarea,dialog input,dialog select,dialog textarea{color:#172728;background:#fff;border-color:#cbd9d6}
+textarea::placeholder,dialog input::placeholder{color:#849290}
+textarea:focus,dialog input:focus,dialog select:focus,dialog textarea:focus{outline:2px solid #8bbfba;border-color:#337f83}
+form button,dialog .primary{color:#fff;background:#337f83;border-color:#337f83}
+form button:hover,dialog .primary:hover{background:#286c70;border-color:#286c70}
+.dialog-head h2{color:#172728}
+.header-actions button,#character-open,.dialog-head button,.secondary{color:#405655;background:#fff;border-color:#cbd9d6}
+.header-actions button:hover,#character-open:hover,.dialog-head button:hover{color:#173d3e;background:#eef5f4;border-color:#7eaaa7}
+dialog{color:#172728;background:#fff;border-color:#d2dfdc;box-shadow:0 24px 80px #15333324}
+dialog::backdrop{background:#122c2c66;backdrop-filter:blur(4px)}
+dialog details,#telegram-settings{border-color:#d5e1df}
+dialog summary,#telegram-settings legend,#diagnostics-dialog h3{color:#337f83}
+dialog .note,.note{color:#697b79}
+#character-preview{background:#f2f6f5}
+#delete-confirm{background:#fff5f3;border-color:#e9c9c4}
+.delete-warning{color:#783d38}
+#job-bar{color:#245b5c;background:#e9f4f2;border-bottom-color:#c5dfdb}
+#job-bar button{color:#fff;background:#337f83;border-color:#337f83}
+#job-bar progress{accent-color:#337f83}
+#job-detail{color:#76504d}
+#diagnostics-jobs{border-color:#d5e1df}
+.diagnostic-row,.diagnostic-job{border-bottom-color:#e1e9e7}
+.diagnostic-row span,.diagnostic-job small{color:#526967}
+.diagnostic-queue{color:#334847}
+#image-viewer{color:#fff;background:#102020}
+#image-viewer .image-view-toolbar select{color:#203233;background:#fff;border-color:#b9cecb}
+#image-viewer .image-view-toolbar button{color:#fff;background:#337f83;border-color:#337f83}
+::selection{color:#fff;background:#337f83}
+@media(prefers-color-scheme:dark){:root{color-scheme:light}}
+
+/* Override RC7's high-specificity dark control rules for the light brand. */
+:root{--control:#fff;--control-hover:#edf4f2;--accent:#337f83;--muted:#617171}
+button:not(.character):not(.candidate):not(.primary):not(.danger):not(.active):not(#composer button),.download-media,
+#settings-open,#debug-open,#character-open,.cast-head button,.cast-actions button,.header-actions button,
+.dialog-head button,.secondary,.telegram-actions button,.play-video-chain,.media .continue-video,
+#scene-open,#scene-new,#scene-clear,#scene-anchor-clear{color:#365352!important;background:#fff!important;border-color:#cbd9d6!important;box-shadow:0 1px 2px #123a3a0d!important}
+#composer button,.tools button.active,button.primary,dialog .primary,.dialog-actions .primary,
+#job-retry,#scene-anchor-generate{color:#fff!important;background:#337f83!important;border-color:#337f83!important}
+button:not(:disabled):hover,.download-media:hover,#settings-open:not(:disabled):hover,#debug-open:not(:disabled):hover,
+#character-open:not(:disabled):hover,.cast-head button:not(:disabled):hover,.cast-actions button:not(:disabled):hover,
+.header-actions button:not(:disabled):hover,.dialog-head button:not(:disabled):hover,.tools button:not(:disabled):hover,
+#composer button:not(:disabled):hover,button.primary:hover,dialog .primary:hover{color:#194b4d!important;background:#e9f3f1!important;border-color:#80aaa6!important}
+#composer button:not(:disabled):hover,.tools button.active:hover,button.primary:hover,dialog .primary:hover,
+#job-retry:hover,#scene-anchor-generate:hover{color:#fff!important;background:#286c70!important;border-color:#286c70!important}
+.candidate,#scene-anchor,.speaker-turn{color:#203233;background:#f5f8f7;border-color:#d5e1df}
+.candidate img{background:#eaf1ef}
+.speaker-turn span,.review-intro{color:#365352}
+#scene-anchor-preview{background:#f2f6f5}
+#scene-anchor .dialog-actions button{color:#365352;background:#fff;border-color:#cbd9d6}
+#scene-anchor #scene-anchor-generate{color:#fff;background:#337f83;border-color:#337f83}

@@ -1,0 +1,274 @@
+{
+  "29": {
+    "inputs": {
+      "filename_prefix": "krea2_identity_edit",
+      "images": [
+        "112",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "53": {
+    "inputs": {
+      "seed": 823224550423506,
+      "steps": 10,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "79",
+        0
+      ],
+      "positive": [
+        "84",
+        0
+      ],
+      "negative": [
+        "85",
+        0
+      ],
+      "latent_image": [
+        "82",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "54": {
+    "inputs": {
+      "samples": [
+        "53",
+        0
+      ],
+      "vae": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "55": {
+    "inputs": {
+      "unet_name": "krea2_turbo_fp8_scaled.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "56": {
+    "inputs": {
+      "clip_name": "qwen3vl_4b_fp8_scaled.safetensors",
+      "type": "krea2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "57": {
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "71": {
+    "inputs": {
+      "lora_name": "krea2_identity_edit_v1_2.safetensors",
+      "strength_model": 1,
+      "model": [
+        "55",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "72": {
+    "inputs": {
+      "image": "k2_txt2img_00207_.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "73": {
+    "inputs": {
+      "pixels": [
+        "72",
+        0
+      ],
+      "vae": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "79": {
+    "inputs": {
+      "ref_boost": 4,
+      "ref_boost_a": 1,
+      "fit_mode": "fit",
+      "model": [
+        "111",
+        0
+      ],
+      "source_latent": [
+        "73",
+        0
+      ],
+      "vae": [
+        "57",
+        0
+      ],
+      "source_image": [
+        "72",
+        0
+      ],
+      "source_image_b": [
+        "90",
+        0
+      ],
+      "target_latent": [
+        "82",
+        0
+      ]
+    },
+    "class_type": "Krea2EditModelPatch",
+    "_meta": {
+      "title": "Krea2 Edit (source patch)"
+    }
+  },
+  "82": {
+    "inputs": {
+      "width": [
+        "83",
+        0
+      ],
+      "height": [
+        "83",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "83": {
+    "inputs": {
+      "aspect_ratio": "1:1 (Square)",
+      "megapixels": 1,
+      "multiple": 8
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "Resolution Selector"
+    }
+  },
+  "84": {
+    "inputs": {
+      "prompt": "A cinematic photograph of the adult man from reference image 2, fully nude and crouched at the right side of a deep velvet chaise lounge, his head cradled between the semi-nude adult woman from reference image 1’s legs. The woman lies supine on her back across the chaise, left hand resting on her abdomen while her right fingers tangle in his hair, guiding him as he leans forward to lick and suck her clitoris with slow, deliberate precision. His tongue circles her folds before plunging deep into her core, his breath visible against her skin as he alternates between rhythmic sucks and gentle flicks. The woman’s legs are parted wide around his shoulders, one foot hooked over his shoulder for balance, while the other knee presses into the chaise to heighten tension. Her face is contorted in ecstasy, eyes shut, lips parted in a silent moan. Preserve facial expressions (his focused intensity; hers climactic bliss), hair flow, and explicit detail of his tongue and her exposed anatomy. Soft diffused light from a standing floor lamp, silhouetted curtains, cinematic depth emphasizing the intimacy and anatomical realism.",
+      "grounding_px": 768,
+      "system_prompt": "",
+      "clip": [
+        "56",
+        0
+      ],
+      "image": [
+        "72",
+        0
+      ],
+      "image_b": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "Krea2EditGroundedEncode",
+    "_meta": {
+      "title": "Krea2 Edit (grounded encode)"
+    }
+  },
+  "85": {
+    "inputs": {
+      "prompt": "",
+      "grounding_px": 768,
+      "system_prompt": "",
+      "clip": [
+        "56",
+        0
+      ],
+      "image": [
+        "72",
+        0
+      ],
+      "image_b": [
+        "90",
+        0
+      ]
+    },
+    "class_type": "Krea2EditGroundedEncode",
+    "_meta": {
+      "title": "negative (leave empty)"
+    }
+  },
+  "90": {
+    "inputs": {
+      "image": "k2_txt2img_00182_.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "111": {
+    "inputs": {
+      "lora_name": "snofs_krea_v1_4.safetensors",
+      "strength_model": 0,
+      "model": [
+        "71",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "112": {
+    "inputs": {
+      "value": [
+        "54",
+        0
+      ]
+    },
+    "class_type": "UnloadAllModels",
+    "_meta": {
+      "title": "Unload ALL Models"
+    }
+  }
+}

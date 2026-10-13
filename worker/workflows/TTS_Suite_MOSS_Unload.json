@@ -1,0 +1,73 @@
+{
+  "6": {
+    "inputs": {
+      "model_variant": "Voice Design 1.7B",
+      "multi_speaker_mode": "Custom Character Switching",
+      "device": "auto",
+      "language": "Auto",
+      "duration_tokens": 0,
+      "sampler_preset": "Model default",
+      "temperature": 1,
+      "top_p": 0.95,
+      "top_k": 50,
+      "repetition_penalty": 1.1,
+      "max_new_tokens": 4096,
+      "chunk_minutes": 0,
+      "instruction": "",
+      "quality": "",
+      "sound_event": "",
+      "ambient_sound": "",
+      "n_vq_for_inference": 0,
+      "dtype": "auto",
+      "attn_implementation": "auto",
+      "codec_model": "MOSS-Audio-Tokenizer",
+      "local_lora_adapter": "None",
+      "lora_adapter_override": ""
+    },
+    "class_type": "MossTTSEngineNode",
+    "_meta": {
+      "title": "⚙️ MOSS-TTS Engine"
+    }
+  },
+  "7": {
+    "inputs": {
+      "reference_text": "This is a neutral sample line for voice setup.",
+      "seed": 1,
+      "voice_instruction": "A clear, natural adult voice with steady pacing and neutral delivery.",
+      "TTS_engine": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "UnifiedVoiceDesignerNode",
+    "_meta": {
+      "title": "🎨 Voice Designer"
+    }
+  },
+  "10": {
+    "inputs": {
+      "value": [
+        "7",
+        1
+      ]
+    },
+    "class_type": "UnloadAllModels",
+    "_meta": {
+      "title": "Unload ALL Models"
+    }
+  },
+  "11": {
+    "inputs": {
+      "filename_prefix": "audio/ComfyUI",
+      "format": "flac",
+      "audio": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "SaveAudioAdvanced",
+    "_meta": {
+      "title": "Save Audio (Advanced)"
+    }
+  }
+}
