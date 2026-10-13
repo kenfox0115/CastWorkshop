@@ -1,11 +1,8 @@
 # Security
 
-Report security issues privately rather than opening a public issue. If private
-vulnerability reporting is enabled, use the repository's **Security → Report a
+Report security issues privately rather than opening a public issue. Private vulnerability reporting is enabled. Use the repository's **Security → Report a
 vulnerability** button or [private advisory form](https://github.com/kenfox0115/CastWorkshop/security/advisories/new).
-The owner must enable and verify that channel when the repository becomes public,
-before announcing the beta release. If the button
-is unavailable, use a private contact method explicitly listed by the owner on
+If the button is unavailable, use a private contact method explicitly listed by the owner on
 their GitHub profile; do not post exploit details publicly to request contact.
 Include the affected revision, reproduction steps, and impact without live tokens,
 private generated media, or databases. No response-time commitment is currently published.
