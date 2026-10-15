@@ -4,6 +4,8 @@ import logging
 import os
 import re
 from worker.image_prompts import compose_chat_media_scene
+from worker.scene_variety import varied_scene, explicit_repeat
+from worker.visual_moments import choose_moment, select_moment, shared_dialogue, moment_scene
 from worker.media_fidelity import fallback_scene, missing_requirements, nsfw_requirements
 from worker.sfw import SFW_RULES, sfw_context, sfw_reply, sfw_safe
 
@@ -165,7 +167,7 @@ def normalize_scene_roles(scene):
     return scene
 
 
-def read_plan(call, messages, model, keep_alive, attempts=2, required_kind=None):
+def read_plan(call, messages, model, keep_alive, attempts=2, required_kind=None, scene_override=None):
     for attempt in range(attempts):
         raw = call("", messages=messages, json_mode=PLAN_SCHEMA, model=model, keep_alive=keep_alive)
         try:
@@ -174,6 +176,8 @@ def read_plan(call, messages, model, keep_alive, attempts=2, required_kind=None)
                 raise ValueError("Invalid response type")
             if required_kind and plan["response_type"] != required_kind:
                 raise ValueError(f"Repair must preserve response_type={required_kind}")
+            if plan["response_type"] == "image" and scene_override is not None:
+                plan["scene"] = scene_override
             if plan["response_type"] != "chat":
                 if not isinstance(plan.get("scene"), str) or not plan["scene"].strip() or len(plan["scene"]) > 4000:
                     raise ValueError("Invalid scene")
@@ -214,8 +218,8 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
                     "video_line": None}
         system = (
             "Respond as the character in a natural conversation. Answer the latest message directly. "
-            "Maintain established facts and continuity. Do not repeat previous replies or invent a "
-            "new location or activity. Treat prior assistant messages marked as images or videos as "
+            "Maintain established facts and continuity. Do not repeat previous replies or invent an "
+            "unrelated location or activity. Initiate plausible changes of room or activity when natural, while keeping the same overall ship, building or world and respecting ongoing actions and explicit constraints. Make any room transition clear in your spoken reply. Treat prior assistant messages marked as images or videos as "
             "events that already happened: react to them or advance from them, and never offer to "
             "reveal or show something that was already shown. Do not write image prompts, JSON, camera instructions, or "
             "claim that media has already been generated. Match response length to the question.\n"
@@ -260,6 +264,12 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
         established_erotic_context = bool(_SEXUAL_REQUEST.search(
             erotic_history + "\n" + str(payload.get("message") or "")
         ))
+        visual_states = payload.get("recent_visual_states") or []
+        if visual_states and isinstance(visual_states[-1], dict):
+            description = str(visual_states[-1].get("description") or "")[:4000]
+            if mode == "sfw":
+                description = sfw_context(description)
+            system += "\nMost recent successfully generated visual event (context only): " + description
         messages = [{"role": "system", "content": system}]
         if turns is not None:
             clean_turns = []
@@ -285,7 +295,29 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
             else:
                 messages[0]["content"] += "\nPrior conversation:\n" + payload["history"]
         messages.append({"role": "user", "content": payload["message"]})
-        reply = payload.get("drafted_reply") or call("", messages=messages, model=model, keep_alive=keep_alive).strip()
+        moment_attempts, moment_trace = 1, []
+        visual_moment = payload.get("shared_visual_moment") if payload.get("drafted_reply") else None
+        if (visual_states and payload.get("allow_media") is not False and not payload.get("drafted_reply")
+                and not re.search(r"\b(?:video|clip)\b", payload["message"], re.I)):
+            try:
+                visual_moment, moment_attempts, moment_trace = select_moment(
+                    payload, model, call, keep_alive, mode, repeat_allowed=explicit_repeat(payload["message"]))
+                messages[0]["content"] += (
+                    "\nSHARED NEXT MOMENT (context for your reply, not dialogue to recite): "
+                    + json.dumps(visual_moment)
+                    + "\nUse this intention naturally. Establish a room/activity transition in spoken dialogue "
+                    "when it changes. The earlier visual event is history, not the current pose. "
+                    "Do not mention photos, images, snapshots, sending, or camera instructions. "
+                    "Media is handled separately; never claim it was already sent."
+                )
+            except Exception as exc:
+                logging.warning("Shared visual moment unavailable (%s); preserving ordinary conversation", type(exc).__name__)
+        if payload.get("drafted_reply"):
+            reply = payload["drafted_reply"]
+        elif visual_moment:
+            reply = shared_dialogue(messages, visual_moment, visual_states, payload["message"], model, call, keep_alive)
+        else:
+            reply = call("", messages=messages, model=model, keep_alive=keep_alive).strip()
         if not reply:
             raise ValueError("Conversation model returned an empty reply")
         if mode == "sfw":
@@ -329,6 +361,8 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
                     reply = _STATIC_ADULT_FALLBACK
         result = {"ok": True, "text": reply, "response_type": "chat", "scene": None,
                   "caption": None, "video_line": None}
+        if visual_moment:
+            result["shared_visual_moment"] = visual_moment
         if payload.get("allow_media") is False:
             must_evict = False
             return result
@@ -412,10 +446,10 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
         planner_system += (
             " IMAGE VARIETY: For each new image, use recent_image_descriptions to avoid repeating "
             "recent compositions. Choose a visibly different framing, static camera angle, gaze, "
-            "or expression when those details are unspecified and fit the latest reply. Preserve "
-            "identity, outfit, setting, lighting, participants, and requested action. Explicit user "
+            "or posture/action when those details are unspecified and fit the latest reply. Preserve "
+            "identity, outfit, overall world/location, participants, and requested action. Initiate related-room changes when naturally supported by the reply, without forcing a move every turn. Expression or cosmetic wording alone is insufficient variety. Explicit user "
             "instructions and required visual outcomes always override variety; keep framing wide "
-            "enough to show every required detail. Treat a scene anchor as continuity for identity "
+            "enough to show every required detail. Use recent_visual_states for the latest successful room/pose, rather than resetting to an older anchor. Treat a scene anchor as continuity for identity "
             "and scene facts, not a requirement to repeat its composition. Apply this rule only "
             "to images; do not invent video camera movement or changes to established scene facts."
         )
@@ -432,16 +466,27 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
                 "earlier_context_for_continuity_only": recent_context,
                 "required_visual_outcomes": required_visual_outcomes,
                 "established_scene": payload.get("scene_context", ""),
+                "recent_visual_states": [
+                    {key: sfw_context(value[:4000]) if mode == "sfw" else value[:4000]
+                     for key, value in state.items() if isinstance(value, str)}
+                    for state in visual_states[-3:] if isinstance(state, dict)],
                 "recent_image_descriptions": [description[:4000] for description in
                     (payload.get("recent_image_descriptions") or [])
                     if isinstance(description, str) and description.strip()][-3:]}
+        if visual_moment:
+            data["visual_moment"] = visual_moment
+            planner_system += (
+                " A shared visual_moment already guides the reply. For an image preserve its concrete "
+                "room, activity, posture, hands, gaze, framing and camera angle. Do not reset to a recent "
+                "scene description. Explicit latest requests and required outcomes retain precedence."
+            )
         if payload.get("media_plan_repair"):
             data["repair_previous_plan"] = payload["media_plan_repair"]
             planner_system += " Repair the previous invalid plan silently. Preserve the drafted reply and requested media type."
         if payload.get("scene_context"):
             planner_system += (
-                " An established_scene is supplied. Keep its location, lighting, clothing, and "
-                "other visible facts unless the latest request explicitly changes them. The latest "
+                " An established_scene is supplied. Keep its overall world/location, clothing, and "
+                "other required facts. A room transition within that location is allowed when the reply establishes it; current actions and explicit fixed-location requests take precedence. The latest "
                 "request always wins when it conflicts with the established scene."
             )
         if mode == "sfw":
@@ -449,12 +494,13 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
         try:
             plan = read_plan(call, [{"role":"system", "content":planner_system},
                                    {"role":"user", "content":json.dumps(data)}], model, keep_alive,
-                             required_kind=(payload.get("media_plan_repair") or {}).get("response_type"))
+                             required_kind=(payload.get("media_plan_repair") or {}).get("response_type"),
+                             scene_override=moment_scene(visual_moment) if visual_moment else None)
             kind = plan["response_type"]
             if kind == "video" and not videos_enabled:
                 kind = "image"
             if kind != "chat":
-                scene = plan.get("scene")
+                scene = normalize_scene_roles(moment_scene(visual_moment)) if kind == "image" and visual_moment else plan.get("scene")
                 line = plan.get("video_line")
                 if not isinstance(scene, str) or not scene.strip() or len(scene) > 4000:
                     raise ValueError("Invalid media scene")
@@ -539,6 +585,41 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
                         scene = fallback_scene(nsfw_requirements(
                             fidelity_source, COMPLETED_MEDIA_REQUIREMENTS
                         ))
+                if kind == "image" and (data["recent_image_descriptions"] or visual_moment):
+                    def replan_variety(previous, reason):
+                        nonlocal visual_moment
+                        if visual_moment:
+                            candidate_moment = choose_moment(payload, model, call, keep_alive, mode,
+                                previous=visual_moment, repair=reason, reply=reply)
+                            candidate = compose_chat_media_scene(normalize_scene_roles(moment_scene(candidate_moment)),
+                                                                 payload["message"], reply, mode)
+                            if mode == "sfw" and not sfw_safe({"scene": candidate, "video_line": ""}, model, call, keep_alive):
+                                raise ValueError("Moment repair failed SFW review")
+                            if mode == "nsfw" and missing_requirements(fidelity_source, candidate, COMPLETED_MEDIA_REQUIREMENTS):
+                                raise ValueError("Moment repair omitted required outcomes")
+                            visual_moment = candidate_moment
+                            result["shared_visual_moment"] = candidate_moment
+                            return candidate, candidate_moment
+                        repair_data = {**data, "previous_scene": previous,
+                            "validation_error": reason,
+                            "required_visual_change": reason.partition("Required concrete change: ")[2],
+                            "instruction": "Implement required_visual_change concretely in the image scene; do not merely reword the old scene. Preserve the drafted reply, latest request, continuity and required outcomes. Do not switch media type."}
+                        revised = read_plan(call, [
+                            {"role": "system", "content": planner_system},
+                            {"role": "user", "content": json.dumps(repair_data)},
+                        ], model, keep_alive, attempts=1, required_kind="image")
+                        candidate = compose_chat_media_scene(revised["scene"], payload["message"], reply, mode)
+                        if mode == "sfw" and not sfw_safe({"scene": candidate, "video_line": ""}, model, call, keep_alive):
+                            raise ValueError("Variety repair failed SFW review")
+                        if mode == "nsfw" and missing_requirements(fidelity_source, candidate, COMPLETED_MEDIA_REQUIREMENTS):
+                            raise ValueError("Variety repair omitted required outcomes")
+                        return candidate
+                    scene = compose_chat_media_scene(scene, payload["message"], reply, mode)
+                    scene, visual_state = varied_scene(scene, data, replan_variety, call, model, keep_alive,
+                                                       start_attempt=moment_attempts, initial_trace=moment_trace)
+                    result["visual_state"] = visual_state
+                elif kind == "image":
+                    result["visual_state"] = {"description": scene, "variety_attempts": 1, "variety_exhausted": False}
                 for repair_attempt in range(3):
                     try:
                         scene = compose_chat_media_scene(scene, payload["message"], reply, mode)
@@ -559,6 +640,8 @@ def respond(payload, model, call, evict, mode="sfw", videos_enabled=True):
                         scene, line = repaired["scene"], repaired.get("video_line")
                         if mode == "sfw" and not sfw_safe({"scene": scene, "video_line": line or ""}, model, call, keep_alive):
                             raise ValueError("Repair did not pass SFW review")
+                if kind == "image":
+                    result["visual_state"]["description"] = scene.strip()
                 result.update(response_type=kind, scene=scene.strip(),
                               video_line=line if kind == "video" else None)
             else:
