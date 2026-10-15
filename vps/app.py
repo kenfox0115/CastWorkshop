@@ -2549,12 +2549,18 @@ def next_job():
             images = conn.execute(
                 "SELECT payload FROM jobs WHERE job_type='character_image_edit' "
                 "AND status='done' AND id < ? AND context_id IS ? "
+                "AND NOT EXISTS (SELECT 1 FROM deliveries d WHERE d.job_id=jobs.id AND d.status != 'delivered') "
                 "AND json_extract(payload,'$.character_id')=? "
                 "ORDER BY id DESC LIMIT 3",
                 (row["id"], row["context_id"], payload["character_id"]),
             ).fetchall()
+            payload["recent_visual_states"] = [
+                json.loads(image["payload"])["visual_state"] for image in reversed(images)
+                if isinstance(json.loads(image["payload"]).get("visual_state"), dict)
+            ]
             payload["recent_image_descriptions"] = [
-                json.loads(image["payload"]).get("prompt", "")
+                (json.loads(image["payload"]).get("visual_state") or {}).get("description")
+                or json.loads(image["payload"]).get("prompt", "")
                 for image in reversed(images)
             ]
         if row["job_type"] == "character_chat_intent" and payload.get("user_message_id"):
@@ -2837,7 +2843,8 @@ def _complete_job_locked(job_id, body=None):
                 retry_payload = dict(payload)
                 retry_payload.update(drafted_reply=reply_text,
                     repair_reply_message_id=reply_message_id,
-                    media_plan_repair=body["media_plan_repair"])
+                    media_plan_repair=body["media_plan_repair"],
+                    shared_visual_moment=body.get("shared_visual_moment") or payload.get("shared_visual_moment"))
                 retry_payload["internal_retry_count"] = int(payload.get("internal_retry_count", 0)) + 1
                 retry_payload["internal_retry_after"] = time.time() + min(60, 2 ** min(retry_payload["internal_retry_count"], 6))
                 followup_job_id = enqueue_job(conn, chat_id,
@@ -2861,12 +2868,12 @@ def _complete_job_locked(job_id, body=None):
                         "a confident full-length stance, arms crossed, one eyebrow raised",
                     ])
                 if scene_context:
-                    scene = (f"Maintain the established scene and its visible continuity: {scene_context}. "
-                             f"Latest requested action (takes precedence): {scene}")
+                    scene = (f"Established overall world and continuity: {scene_context}. "
+                             f"Current planned image (including reply-supported related-room transitions, takes precedence): {scene}")
                 if payload.get("scene_reference_image"):
                     scene = ("Use the approved scene anchor as the visual baseline. Preserve its character identity, "
-                             "environment, lighting, clothing, and props unless the latest request explicitly changes "
-                             "one. Framing, static camera angle, gaze, and expression follow the planned image below "
+                             "overall world, clothing, and required props unless the latest request changes them. Related-room transitions supported by the reply are allowed. "
+                             "Pose, action, framing, static camera angle and gaze follow the planned image below "
                              "and may differ from the anchor while preserving requested action and scene facts: "
                              f"{scene}")
                 instruction = validate_followup_instruction(active_char["concept"], scene, payload.get("message", ""), reply_text,
@@ -2875,6 +2882,7 @@ def _complete_job_locked(job_id, body=None):
                     conn, chat_id, "character_image_edit", "heavy",
                     {
                         "prompt": instruction,
+                        "visual_state": body.get("visual_state") or {"description": str(body.get("scene") or "")},
                         "latest_request": payload.get("message", ""),
                         "character_id": active_char["id"],
                         "reference_image": payload.get("scene_reference_image") or active_char["base_image_path"],
