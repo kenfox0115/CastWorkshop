@@ -34,18 +34,23 @@ class IdentityDefaultTests(unittest.TestCase):
         self.assertNotIn('Huihui-Qwen3-VL-4B-Instruct-abliterated-fp8_scaled.safetensors', names)
 
     def test_candidate_batch_submits_shared_models_and_keeps_portrait_framing(self):
-        with (patch.object(cc, 'submit_prompt', side_effect=['a', 'b']) as submit,
+        with (patch.object(cc, 'submit_prompt', side_effect=['a', 'b', 'c']) as submit,
               patch.object(cc, 'wait_for_result', return_value={'filename': 'candidate.png'}),
               patch.object(cc, 'fetch_image_bytes', return_value=b'image'),
               patch.object(cc, 'free_vram'),
               patch.object(cc, '_content_mode', return_value='nsfw')):
-            result = cc.generate_look_variants(['first appearance', 'second appearance'])
-        self.assertEqual(len(result), 2)
+            result = cc.generate_look_variants(['first appearance', 'second appearance', 'third appearance'])
+        self.assertEqual(len(result), 3)
         for call in submit.call_args_list:
             graph = call.args[0]
             self.assertEqual(graph['30:10']['inputs']['unet_name'], 'krea2_turbo_fp8_scaled.safetensors')
             self.assertEqual(graph['30:11']['inputs']['clip_name'], 'qwen3vl_4b_fp8_scaled.safetensors')
             self.assertEqual(graph['49']['inputs']['aspect_ratio'], '3:4 (Portrait Standard)')
+            self.assertEqual(graph['49']['inputs']['megapixels'], 1)
+            self.assertEqual(graph['30:5']['inputs']['batch_size'], 1)
+        unloads = [any(n.get('class_type') == 'UnloadAllModels' for n in call.args[0].values())
+                   for call in submit.call_args_list]
+        self.assertEqual(unloads, [False, False, True])
 
     def test_mode_aspect_reference_matrix_uses_approved_clownshark_baseline(self):
         for aspect in ('vertical','cinematic'):
