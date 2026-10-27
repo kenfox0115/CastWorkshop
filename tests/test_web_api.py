@@ -484,6 +484,84 @@ class WebApiTests(unittest.TestCase):
             self.assertEqual(replacement["payload"]["retry_of_job_id"],original)
             self.assertEqual(len(client.get("/api/v1/bootstrap").get_json()["messages"]),1)
 
+    def test_restart_selection_step_regenerates_candidates_and_preserves_assets(self):
+        for promotion,generation,stage,label in (
+            ("promote_voice","voice_sample_batch","voice_generating","voice"),
+            ("promote_reference","character_image_batch","image_queued","look"),
+        ):
+            with self.subTest(step=label),api.app.test_client() as client:
+                character_id=self.character()
+                client.get("/api/v1/bootstrap")
+                with api.get_db() as conn:
+                    cid=conn.execute("SELECT id FROM contexts WHERE transport='web'").fetchone()[0]
+                    source=api.enqueue_job(conn,0,generation,"heavy",{"character_id":character_id,"prompt":"original candidate script","voice_description":"warm voice"},context_id=cid)
+                    conn.execute("UPDATE jobs SET status='done' WHERE id=?",(source,))
+                    original=api.enqueue_job(conn,0,promotion,"heavy",{"character_id":character_id,"filename":"truncated.flac"},context_id=cid)
+                    conn.execute("INSERT INTO sessions(character_id,chat_id,context_id,state) VALUES(?,0,?,?)",(character_id,cid,"promoting_voice" if label=="voice" else "promoting_reference"))
+                claimed=client.get("/jobs/next?worker_id=test").get_json()
+                self.assertEqual(claimed["id"],original)
+                failed=client.post(f"/jobs/{original}/complete",json={"lease_token":claimed["lease_token"],"ok":False,"text":"boundary missing"})
+                self.assertEqual(failed.status_code,200)
+                detail=client.get(f"/api/v1/jobs/{original}").get_json()
+                self.assertEqual(detail["restart_step"],label)
+                restarted=client.post(f"/api/v1/jobs/{original}/retry",json={"scope":"step"})
+                self.assertEqual(restarted.status_code,202)
+                new_id=restarted.get_json()["job_id"]
+                self.assertEqual(client.post(f"/api/v1/jobs/{original}/retry",json={"scope":"step"}).status_code,409)
+                creation=client.get(f"/api/v1/characters/{character_id}/creation-state").get_json()
+                self.assertEqual(creation["stage"],stage)
+                with api.get_db() as conn:
+                    row=conn.execute("SELECT * FROM jobs WHERE id=?",(new_id,)).fetchone()
+                    payload=json.loads(row["payload"])
+                    self.assertEqual(row["job_type"],generation)
+                    self.assertEqual(payload["prompt"],"original candidate script")
+                    self.assertEqual(payload["retry_of_job_id"],original)
+                    self.assertNotIn("filename",payload)
+                    char=conn.execute("SELECT * FROM characters WHERE id=?",(character_id,)).fetchone()
+                    self.assertEqual(char["base_image_path"],"secret/image.png")
+                    self.assertEqual(char["voice_sample_path"],"secret/voice.wav")
+                    # Finish this subtest without leaving active work for the next step.
+                    conn.execute("UPDATE jobs SET status='done' WHERE id=?",(new_id,))
+                    conn.execute("DELETE FROM sessions WHERE character_id=?",(character_id,))
+
+    def test_restart_failed_voice_generation_returns_new_candidates_to_picker(self):
+        character_id=self.character()
+        with tempfile.TemporaryDirectory() as media_dir,patch.object(artifacts,"MEDIA_ROOT",Path(media_dir)),api.app.test_client() as client:
+            client.get("/api/v1/bootstrap")
+            with api.get_db() as conn:
+                cid=conn.execute("SELECT id FROM contexts WHERE transport='web'").fetchone()[0]
+                original=api.enqueue_job(conn,0,"voice_sample_batch","heavy",{"character_id":character_id,"prompt":"full passage"},context_id=cid)
+                conn.execute("UPDATE jobs SET status='failed',result='{}' WHERE id=?",(original,))
+            restarted=client.post(f"/api/v1/jobs/{original}/retry",json={"scope":"step"})
+            self.assertEqual(restarted.status_code,202)
+            claimed=client.get("/jobs/next?worker_id=test").get_json()
+            self.assertEqual(claimed["id"],restarted.get_json()["job_id"])
+            done=client.post(f"/jobs/{claimed['id']}/complete",json={"lease_token":claimed["lease_token"],"ok":True,"audios_b64":[base64.b64encode(b"fresh recording").decode()],"audio_files":[{"filename":"fresh.wav"}]})
+            self.assertEqual(done.status_code,200)
+            state=client.get(f"/api/v1/characters/{character_id}/creation-state").get_json()
+            self.assertEqual(state["stage"],"awaiting_voice_choice")
+            self.assertEqual(state["candidate_count"],1)
+            self.assertEqual(len(state["candidate_artifact_ids"]),1)
+            self.assertEqual(client.post(f"/api/v1/characters/{character_id}/voice-selection",json={"choice":0}).status_code,202)
+            promotion=client.get("/jobs/next?worker_id=test").get_json()
+            self.assertEqual(promotion["payload"]["filename"],"fresh.wav")
+
+    def test_restart_step_requires_original_request_in_same_context(self):
+        character_id=self.character()
+        with api.app.test_client() as client:
+            client.get("/api/v1/bootstrap")
+            with api.get_db() as conn:
+                cid=conn.execute("SELECT id FROM contexts WHERE transport='web'").fetchone()[0]
+                other=api.enqueue_job(conn,777,"voice_sample_batch","heavy",{"character_id":character_id,"prompt":"private other context"})
+                conn.execute("UPDATE jobs SET status='done' WHERE id=?",(other,))
+                original=api.enqueue_job(conn,0,"promote_voice","heavy",{"character_id":character_id,"filename":"bad.flac"},context_id=cid)
+                conn.execute("UPDATE jobs SET status='failed' WHERE id=?",(original,))
+            self.assertEqual(client.post(f"/api/v1/jobs/{original}/retry",json={"scope":"step"}).status_code,409)
+            self.assertEqual(client.post(f"/api/v1/jobs/{original}/retry",json={"scope":"unknown"}).status_code,422)
+            with api.get_db() as conn:
+                self.assertEqual(conn.execute("SELECT COUNT(*) FROM sessions WHERE character_id=?",(character_id,)).fetchone()[0],0)
+                self.assertEqual(conn.execute("SELECT MAX(id) FROM jobs").fetchone()[0],original)
+
     def test_cancelled_job_cannot_be_retried(self):
         character_id=self.character()
         with api.app.test_client() as client:

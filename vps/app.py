@@ -955,7 +955,10 @@ def _cancel_telegram_job(conn, chat_id, job_id):
     return f"Cancelled job #{row['id']}."
 
 
-def _retry_telegram_job(conn,chat_id,job_id=None):
+from vps.job_retry import restart_step
+
+
+def _retry_telegram_job(conn,chat_id,job_id=None,scope="job"):
     row=_telegram_job(conn,chat_id,job_id,("failed",))
     if not row:return None,"No retryable failed job was found."
     result=json.loads(row["result"] or "{}")
@@ -971,16 +974,21 @@ def _retry_telegram_job(conn,chat_id,job_id=None):
     creation_states={"profile_generate":"profile_generating","character_image_batch":"image_queued",
                      "promote_reference":"promoting_reference","voice_sample_batch":"voice_generating",
                      "promote_voice":"promoting_voice"}
-    state=creation_states.get(row["job_type"])
+    job_type=row["job_type"];state=creation_states.get(job_type)
+    if scope=="step":
+        if conn.execute("SELECT 1 FROM jobs WHERE context_id IS ? AND status IN ('queued','dispatched','interrupted')",(row["context_id"],)).fetchone() or conn.execute("SELECT 1 FROM sessions WHERE context_id IS ? AND state!='active'",(row["context_id"],)).fetchone():
+            return None,"Finish the current generation or character setup first."
+        try:job_type,state,payload=restart_step(conn,row)
+        except ValueError as exc:return None,str(exc)
     if state:
         conn.execute("DELETE FROM sessions WHERE chat_id=? AND character_id=? AND state!='active'",(chat_id,character_id))
         conn.execute("INSERT INTO sessions(character_id,chat_id,context_id,state) VALUES(?,?,?,?)",
                      (character_id,chat_id,row["context_id"],state))
     payload["retry_of_job_id"]=row["id"]
     payload.pop("settings_snapshot",None)
-    new_id=enqueue_job(conn,chat_id,row["job_type"],row["weight"],payload,priority=row["priority"],
+    new_id=enqueue_job(conn,chat_id,job_type,row["weight"],payload,priority=row["priority"],
                        context_id=row["context_id"])
-    return new_id,f"Retry queued as job #{new_id}."
+    return new_id,f"{'Selection step restarted' if scope=='step' else 'Retry queued'} as job #{new_id}."
 
 
 def handle_callback_query(callback):
@@ -1081,13 +1089,13 @@ def handle_message(chat_id: int, text: str):
             return
 
         if command == "/retry":
-            parts=text.strip().split(maxsplit=1);job_id=None
-            if len(parts)==2:
-                if not parts[1].isdigit():
-                    _defer(conn,None,"msg",chat_id,"Use /retry <job-id>, or /retry for the latest failed job.")
-                    return
-                job_id=int(parts[1])
-            _,message=_retry_telegram_job(conn,chat_id,job_id)
+            parts=text.strip().split()[1:];job_id=None;scope="job"
+            if parts and parts[-1]=="step":scope="step";parts.pop()
+            if len(parts)>1 or (parts and not parts[0].isdigit()):
+                _defer(conn,None,"msg",chat_id,"Use /retry [job-id] [step]. Add step to restart look or voice selection.")
+                return
+            if parts:job_id=int(parts[0])
+            _,message=_retry_telegram_job(conn,chat_id,job_id,scope)
             _defer(conn,None,"msg",chat_id,message)
             return
 

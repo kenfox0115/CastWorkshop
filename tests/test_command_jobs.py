@@ -150,6 +150,24 @@ class CommandJobTests(unittest.TestCase):
             session=conn.execute("SELECT state FROM sessions WHERE chat_id=1 AND character_id=?",(character,)).fetchone()
             self.assertEqual(session["state"],"image_queued")
 
+    def test_retry_step_restarts_voice_generation_in_telegram(self):
+        with api.get_db() as conn:
+            character=conn.execute("INSERT INTO characters(name,concept,base_image_path) VALUES('Avery','adult','chosen.png')").lastrowid
+            source=api.enqueue_job(conn,1,"voice_sample_batch","heavy",{"character_id":character,"prompt":"complete voice script"})
+            conn.execute("UPDATE jobs SET status='done' WHERE id=?",(source,))
+            old=api.enqueue_job(conn,1,"promote_voice","heavy",{"character_id":character,"filename":"bad.flac"})
+            conn.execute("UPDATE jobs SET status='failed',result='{}' WHERE id=?",(old,))
+        api.handle_message(1,f"/retry {old} step")
+        with api.get_db() as conn:
+            new=conn.execute("SELECT * FROM jobs ORDER BY id DESC LIMIT 1").fetchone()
+            self.assertEqual(new["job_type"],"voice_sample_batch")
+            self.assertEqual(json.loads(new["payload"])["prompt"],"complete voice script")
+            self.assertEqual(conn.execute("SELECT state FROM sessions WHERE character_id=?",(character,)).fetchone()[0],"voice_generating")
+            job_id=new["id"]
+        api.handle_message(1,f"/retry {old} step")
+        with api.get_db() as conn:
+            self.assertEqual(conn.execute("SELECT MAX(id) FROM jobs").fetchone()[0],job_id)
+
     def test_video_callback_queues_single_character_continuation(self):
         with api.get_db() as conn:
             character=conn.execute("INSERT INTO characters(name,concept,base_image_path,voice_sample_path) VALUES('Avery','adult','a.png','a.flac')").lastrowid

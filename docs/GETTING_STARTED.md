@@ -173,3 +173,14 @@ Run the verifier using the environment populated by setup:
 
 The verifier needs the application Python dependencies, but uses temporary databases
 and local fake services for integration tests. It does not submit real media jobs.
+
+### Restart a failed character setup step
+
+After a look or voice setup failure, use **Restart look selection** or
+**Restart voice selection** in the failed creation dialog or job bar. This
+creates fresh candidates from the original generation request and returns to
+selection, preserving the character profile and saved assets. **Retry** still
+reruns only the failed operation, such as storing the selected recording.
+
+In Telegram, use `/retry <job-id> step`, or `/retry step` for the latest failed
+job. Finish current generation or setup before restarting another step.

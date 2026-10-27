@@ -6,6 +6,7 @@ from flask import Blueprint,Response,jsonify,request,send_file,send_from_directo
 from PIL import Image,ImageOps
 from scripts.model_manifest import readiness as model_readiness
 from vps.artifacts import resolve_artifact
+from vps.job_retry import STEP_JOBS, restart_step
 from vps.scenes import active_scene_view, scene_view
 from worker.image_prompts import build_image_prompt
 from worker.video_contract import dialogue_candidates, normalize_quotes
@@ -101,6 +102,7 @@ def _job_view(row):
     cancelled=bool(result and result.get("cancelled"))
     return {"id":row["id"],"type":row["job_type"],"status":row["status"],"progress":progress,
             "failure":_public_failure(result) if row["status"]=="failed" else None,
+            "restart_step":STEP_JOBS[row["job_type"]][2] if row["status"]=="failed" and not cancelled and row["job_type"] in STEP_JOBS else None,
             "cancelled":cancelled,"can_retry":row["status"]=="failed" and not cancelled and row["job_type"] in RETRYABLE_JOB_TYPES}
 
 def create_web_blueprint(get_db,db_lock,get_setting,defaults,enqueue_job,record_message,build_identity_instruction,set_setting,build_workflow_steps,get_workflow_strategy,get_shared_character,set_shared_character):
@@ -631,12 +633,15 @@ def create_web_blueprint(get_db,db_lock,get_setting,defaults,enqueue_job,record_
             return jsonify(view)
     @web.post("/api/v1/jobs/<int:job_id>/retry")
     def retry_job(job_id):
+        body=request.get_json(silent=True) or {}
+        scope=body.get("scope","job")
+        if scope not in ("job","step"):return _error("validation_error","Choose job or step retry.",422)
         creation_states={"profile_generate":"profile_generating","character_image_batch":"image_queued",
                          "promote_reference":"promoting_reference","voice_sample_batch":"voice_generating",
                          "promote_voice":"promoting_voice"}
         with db_lock,get_db() as conn:
             cid=context_id(conn)
-            if work_conflict(conn,cid):return _error("job_conflict","Finish the current generation or character setup first.",409)
+            if work_conflict(conn,cid) or conn.execute("SELECT 1 FROM jobs WHERE context_id=? AND status='interrupted'",(cid,)).fetchone():return _error("job_conflict","Finish the current generation or character setup first.",409)
             row=conn.execute("SELECT * FROM jobs WHERE id=? AND context_id=?",(job_id,cid)).fetchone()
             if not row:return _error("not_found","Job not found.",404)
             result=json.loads(row["result"] or "{}")
@@ -645,12 +650,15 @@ def create_web_blueprint(get_db,db_lock,get_setting,defaults,enqueue_job,record_
             payload=json.loads(row["payload"]);character_id=payload.get("character_id")
             if character_id and not conn.execute("SELECT 1 FROM characters WHERE id=?",(character_id,)).fetchone():
                 return _error("state_conflict","The character used by this job no longer exists.",409)
-            state=creation_states.get(row["job_type"])
+            job_type=row["job_type"];state=creation_states.get(job_type)
+            if scope=="step":
+                try:job_type,state,payload=restart_step(conn,row)
+                except ValueError as exc:return _error("state_conflict",str(exc),409)
             if state:
                 conn.execute("DELETE FROM sessions WHERE context_id=? AND character_id=? AND state!='active'",(cid,character_id))
                 conn.execute("INSERT INTO sessions(character_id,chat_id,context_id,state) VALUES(?,0,?,?)",(character_id,cid,state))
             payload["retry_of_job_id"]=job_id
-            new_id=enqueue_job(conn,row["chat_id"],row["job_type"],row["weight"],payload,priority=row["priority"],context_id=cid)
+            new_id=enqueue_job(conn,row["chat_id"],job_type,row["weight"],payload,priority=row["priority"],context_id=cid)
             return jsonify({"job_id":new_id,"status":"queued","retry_of_job_id":job_id}),202
 
     @web.post("/api/v1/jobs/<int:job_id>/cancel")
