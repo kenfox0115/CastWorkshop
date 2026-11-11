@@ -2,7 +2,7 @@
   "49": {
     "inputs": {
       "aspect_ratio": "3:4 (Portrait Standard)",
-      "megapixels": 2,
+      "megapixels": 1,
       "multiple": 8
     },
     "class_type": "ResolutionSelector",
