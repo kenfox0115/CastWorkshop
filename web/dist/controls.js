@@ -1,6 +1,6 @@
 // Preserve native text as the accessible name, including dynamically rendered media controls.
 (() => {
-  const selector = "#settings-open,#debug-open,#character-new,#character-open,.dialog-head button:not(#job-cancel-form button),#image-view-close,.tools [data-mode=\"chat\"],.tools [data-mode=\"image\"],.tools [data-mode=\"video\"],#composer button,#multi-image-open,#multi-video-open,#job-retry,#diagnostics-refresh,.reroll,.download-media,#character-delete,#multi-video-back,#video-chain-previous,#video-chain-next,#video-chain-fullscreen,#scene-open,#scene-new,#scene-anchor-generate,#multi-video-confirm,#image-anchor-approve,#diagnostics-copy,.play-video-chain,.continue-video";
+  const selector = "#settings-open,#debug-open,#character-new,#character-open,.dialog-head button:not(#job-cancel-form button),#image-view-close,.tools [data-mode=\"chat\"],.tools [data-mode=\"image\"],.tools [data-mode=\"video\"],#composer button,#multi-image-open,#multi-video-open,#job-retry,#diagnostics-refresh,.reroll,.download-media,#character-delete,#multi-video-back,#video-chain-previous,#video-chain-next,#video-chain-fullscreen,#video-chain-download,#scene-open,#scene-new,#scene-anchor-generate,#multi-video-confirm,#image-anchor-approve,#diagnostics-copy,.play-video-chain,.continue-video";
   function label(control) {
     const text = control.textContent.trim();
     if (text) control.title = text === '+ New' ? 'New character' : text;

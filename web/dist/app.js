@@ -136,8 +136,8 @@ $("continue-video-confirm").onclick=async()=>{if(!continueVideoDraft)return;let 
 
 const videoChainDialog=document.createElement("dialog");videoChainDialog.id="video-chain-dialog";
 videoChainDialog.setAttribute("aria-label","Video sequence player");
-videoChainDialog.innerHTML='<div class="dialog-head"><div><h2>Video sequence</h2><p class="note" id="video-chain-position"></p></div><button type="button" id="video-chain-close">Close</button></div><video id="video-chain-player" controls playsinline preload="metadata"></video><div class="dialog-actions video-chain-actions"><button type="button" id="video-chain-previous">Previous</button><button type="button" id="video-chain-fullscreen">Full screen</button><button type="button" id="video-chain-next">Next</button></div>';
-document.body.append(videoChainDialog);let videoChain=[],videoChainIndex=0;
+videoChainDialog.innerHTML='<div class="dialog-head"><div><h2>Video sequence</h2><p class="note" id="video-chain-position"></p></div><button type="button" id="video-chain-close">Close</button></div><video id="video-chain-player" controls playsinline preload="metadata"></video><div class="dialog-actions video-chain-actions"><button type="button" id="video-chain-previous">Previous</button><button type="button" id="video-chain-fullscreen">Full screen</button><button type="button" id="video-chain-next">Next</button><button type="button" id="video-chain-download">Download as one file</button></div>';
+document.body.append(videoChainDialog);let videoChain=[],videoChainIndex=0,videoChainEndId=null;
 function showVideoChainItem(index,autoplay=false){
   if(!videoChain.length)return;videoChainIndex=Math.max(0,Math.min(index,videoChain.length-1));
   let player=$("video-chain-player");player.src=videoChain[videoChainIndex].url;
@@ -146,9 +146,14 @@ function showVideoChainItem(index,autoplay=false){
   if(autoplay)player.play().catch(()=>{});
 }
 async function openVideoChain(artifactId){
-  try{let data=await api("/api/v1/artifacts/"+artifactId+"/video-chain");videoChain=data.artifacts;showVideoChainItem(0);videoChainDialog.showModal()}
+  try{let data=await api("/api/v1/artifacts/"+artifactId+"/video-chain");videoChain=data.artifacts;videoChainEndId=artifactId;showVideoChainItem(0);videoChainDialog.showModal()}
   catch(err){$("hint").textContent=err.message}
 }
+$("video-chain-download").onclick=()=>{
+  if(!videoChainEndId)return;
+  let a=document.createElement("a");a.href="/api/v1/artifacts/"+videoChainEndId+"/video-chain/download";
+  a.download="castworkshop-sequence-"+videoChainEndId+".mp4";document.body.append(a);a.click();a.remove();
+};
 $("video-chain-player").addEventListener("ended",()=>{if(videoChainIndex+1<videoChain.length)showVideoChainItem(videoChainIndex+1,true)});
 $("video-chain-previous").onclick=()=>showVideoChainItem(videoChainIndex-1,true);
 $("video-chain-next").onclick=()=>showVideoChainItem(videoChainIndex+1,true);
