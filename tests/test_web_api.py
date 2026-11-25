@@ -206,6 +206,53 @@ class WebApiTests(unittest.TestCase):
             self.assertEqual([item["id"] for item in chain.get_json()["artifacts"]],
                              [artifact_id,continued_artifact_id])
 
+    def test_video_chain_download_joins_clips_into_one_file(self):
+        from vps import web_api
+        character_id=self.character()
+        with tempfile.TemporaryDirectory() as media_dir,patch.object(artifacts,"MEDIA_ROOT",Path(media_dir)):
+            with api.app.test_client() as client:
+                client.put("/api/v1/active-character",json={"character_id":character_id})
+                original=client.post("/api/v1/media/video",json={"content":"walks onto the balcony"}).get_json()
+                claimed=client.get("/jobs/next?worker_id=test").get_json()
+                first=client.post(f"/jobs/{original['job_id']}/complete",json={
+                    "lease_token":claimed["lease_token"],"ok":True,
+                    "video_b64":base64.b64encode(b"first clip").decode()}).get_json()["artifact_id"]
+                continued=client.post(f"/api/v1/artifacts/{first}/continue",json={"content":"turns and smiles"})
+                followup=client.get("/jobs/next?worker_id=test").get_json()
+                last=client.post(f"/jobs/{followup['id']}/complete",json={
+                    "lease_token":followup["lease_token"],"ok":True,
+                    "video_b64":base64.b64encode(b"second clip").decode()}).get_json()["artifact_id"]
+                calls={}
+                def fake_concat(paths,target):
+                    calls["paths"]=[p.name for p in paths]
+                    target.write_bytes(b"joined sequence")
+                with patch.object(web_api,"_ffmpeg_concat",side_effect=fake_concat):
+                    download=client.get(f"/api/v1/artifacts/{last}/video-chain/download")
+                self.assertEqual(download.status_code,200)
+                self.assertEqual(download.data,b"joined sequence")
+                self.assertIn("attachment",download.headers["Content-Disposition"])
+                self.assertIn(f"castworkshop-sequence-{last}.mp4",download.headers["Content-Disposition"])
+                self.assertEqual(len(calls["paths"]),2)
+                download.close()
+
+    def test_video_chain_download_serves_single_clip_without_ffmpeg(self):
+        from vps import web_api
+        character_id=self.character()
+        with tempfile.TemporaryDirectory() as media_dir,patch.object(artifacts,"MEDIA_ROOT",Path(media_dir)):
+            with api.app.test_client() as client:
+                client.put("/api/v1/active-character",json={"character_id":character_id})
+                sent=client.post("/api/v1/media/video",json={"content":"waves"}).get_json()
+                claimed=client.get("/jobs/next?worker_id=test").get_json()
+                artifact_id=client.post(f"/jobs/{sent['job_id']}/complete",json={
+                    "lease_token":claimed["lease_token"],"ok":True,
+                    "video_b64":base64.b64encode(b"only clip").decode()}).get_json()["artifact_id"]
+                with patch.object(web_api,"_ffmpeg_concat",side_effect=AssertionError("must not concat")):
+                    download=client.get(f"/api/v1/artifacts/{artifact_id}/video-chain/download")
+                self.assertEqual(download.status_code,200)
+                self.assertEqual(download.data,b"only clip")
+                self.assertIn("attachment",download.headers["Content-Disposition"])
+                download.close()
+
     def test_continuation_rejects_non_video_artifact(self):
         character_id=self.character()
         with tempfile.TemporaryDirectory() as media_dir,patch.object(artifacts,"MEDIA_ROOT",Path(media_dir)):

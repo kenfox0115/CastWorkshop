@@ -1,5 +1,5 @@
 """Local web API and static frontend."""
-import io,json,os,re,sys,time
+import io,json,os,re,shutil,subprocess,sys,tempfile,time
 import requests
 from pathlib import Path
 from flask import Blueprint,Response,jsonify,request,send_file,send_from_directory
@@ -9,6 +9,7 @@ from vps.artifacts import resolve_artifact
 from vps.scenes import active_scene_view, scene_view
 from worker.image_prompts import build_image_prompt
 from worker.video_contract import dialogue_candidates, normalize_quotes
+from worker.voice_trim import resolve_ffmpeg
 ROOT=Path(__file__).resolve().parents[1];WEB_ROOT=ROOT/"web"/"dist"
 LOG_DIR=Path(os.environ.get("CC_LOG_DIR",ROOT/"logs"))
 ENV_PATH=ROOT/".env"
@@ -66,6 +67,70 @@ def _heartbeat(name):
     return {"status":"online" if age<20 else "stale","age_seconds":round(age,1)}
 
 def _error(code,message,status=400):return jsonify({"error":{"code":code,"message":message}}),status
+
+def _video_chain_rows(conn,cid,artifact_id):
+    """Ordered continuation ancestry (oldest first) as artifact rows, or an error tuple."""
+    chain=[];seen=set();current=artifact_id
+    while current is not None:
+        if current in seen:return None,("state_conflict","The continuation chain contains a cycle.",409)
+        seen.add(current)
+        row=conn.execute("""SELECT a.id,a.kind,a.relative_path,a.mime_type,a.metadata_json FROM artifacts a
+          WHERE a.id=? AND (a.context_id=? OR EXISTS(
+            SELECT 1 FROM message_artifacts ma WHERE ma.artifact_id=a.id))""",(current,cid)).fetchone()
+        if not row or row["kind"]!="video":return None,("not_found","A video in this continuation chain is unavailable.",404)
+        chain.append(row)
+        try:metadata=json.loads(row["metadata_json"] or "{}")
+        except (TypeError,ValueError):metadata={}
+        parent=metadata.get("continuation_of_artifact_id")
+        current=parent if isinstance(parent,int) else None
+        if len(chain)>100:return None,("state_conflict","The continuation chain is too long.",409)
+    chain.reverse()
+    return chain,None
+
+_XFADE_SECONDS = 0.10
+
+def _probe_duration(executable,path):
+    """Clip duration in seconds via `ffmpeg -i` (portable; ffprobe is not bundled)."""
+    result=subprocess.run([executable,"-hide_banner","-i",str(path)],
+        capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=120)
+    match=re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)",result.stderr or "")
+    if not match:return None
+    hours,minutes,seconds=match.groups()
+    return int(hours)*3600+int(minutes)*60+float(seconds)
+
+def _ffmpeg_concat(paths,target):
+    """Join clips into target, crossfading seams so shared poses don't hold a frame."""
+    executable=resolve_ffmpeg()
+    if len(paths)>1:
+        durations=[_probe_duration(executable,p) for p in paths]
+        if all(d and d>0 for d in durations):
+            fade=min(_XFADE_SECONDS,min(durations)/4.0)
+            if fade>0.05:
+                inputs=[]
+                for p in paths:inputs+=["-i",str(p)]
+                parts=[f"[{i}:v]fps=24[v{i}]" for i in range(len(paths))]
+                prev="v0";acc=durations[0]
+                for k in range(1,len(paths)):
+                    out=f"x{k}";offset=acc-fade
+                    parts.append(f"[{prev}][v{k}]xfade=transition=fade:duration={fade:.3f}:offset={offset:.3f}[{out}]")
+                    prev=out;acc=acc+durations[k]-fade
+                try:
+                    result=subprocess.run([executable,"-y","-hide_banner","-loglevel","error",
+                        *inputs,"-filter_complex",";".join(parts),"-map",f"[{prev}]",
+                        "-c:v","libx264","-preset","veryfast","-crf","18","-pix_fmt","yuv420p",str(target)],
+                        capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=600)
+                    if result.returncode==0 and target.is_file() and target.stat().st_size>0:return
+                except (OSError,subprocess.TimeoutExpired):pass
+    listing=target.with_suffix(target.suffix+".txt")
+    listing.write_text("".join(f"file '{p.resolve().as_posix()}'\n" for p in paths),encoding="utf-8")
+    try:
+        result=subprocess.run([executable,"-y","-hide_banner","-loglevel","error",
+            "-f","concat","-safe","0","-i",str(listing),"-c","copy",str(target)],
+            capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=600)
+    finally:
+        listing.unlink(missing_ok=True)
+    if result.returncode!=0 or not target.is_file() or target.stat().st_size==0:
+        raise RuntimeError("FFmpeg could not join the video sequence.")
 
 def _quoted_dialogue(scene):
     normalized=normalize_quotes(scene)
@@ -695,23 +760,35 @@ def create_web_blueprint(get_db,db_lock,get_setting,defaults,enqueue_job,record_
     def video_chain(artifact_id):
         """Return the linear continuation ancestry ending at this video."""
         with db_lock,get_db() as conn:
-            cid=context_id(conn);chain=[];seen=set();current=artifact_id
-            while current is not None:
-                if current in seen:return _error("state_conflict","The continuation chain contains a cycle.",409)
-                seen.add(current)
-                row=conn.execute("""SELECT a.id,a.kind,a.metadata_json FROM artifacts a
-                  WHERE a.id=? AND (a.context_id=? OR EXISTS(
-                    SELECT 1 FROM message_artifacts ma WHERE ma.artifact_id=a.id))""",(current,cid)).fetchone()
-                if not row or row["kind"]!="video":return _error("not_found","A video in this continuation chain is unavailable.",404)
-                chain.append(row["id"])
-                try:metadata=json.loads(row["metadata_json"] or "{}")
-                except (TypeError,ValueError):metadata={}
-                parent=metadata.get("continuation_of_artifact_id")
-                current=parent if isinstance(parent,int) else None
-                if len(chain)>100:return _error("state_conflict","The continuation chain is too long.",409)
-        chain.reverse()
+            cid=context_id(conn);chain,error=_video_chain_rows(conn,cid,artifact_id)
+        if error:return _error(*error)
         return jsonify({"artifact_id":artifact_id,"count":len(chain),"artifacts":[
-          {"id":item,"url":f"/api/v1/artifacts/{item}"} for item in chain]})
+          {"id":row["id"],"url":f"/api/v1/artifacts/{row['id']}"} for row in chain]})
+    @web.get("/api/v1/artifacts/<int:artifact_id>/video-chain/download")
+    def video_chain_download(artifact_id):
+        """Stream the whole continuation sequence ending at this video as one MP4."""
+        with db_lock,get_db() as conn:
+            cid=context_id(conn);chain,error=_video_chain_rows(conn,cid,artifact_id)
+        if error:return _error(*error)
+        try:paths=[resolve_artifact(row["relative_path"]) for row in chain]
+        except ValueError:return _error("not_found","Artifact not found.",404)
+        if any(not path.is_file() for path in paths):
+            return _error("not_found","Artifact file is missing.",404)
+        if len(paths)==1:
+            return send_file(paths[0],mimetype=chain[0]["mime_type"] or "video/mp4",
+              conditional=True,as_attachment=True,
+              download_name=f"castworkshop-sequence-{artifact_id}{paths[0].suffix}")
+        scratch=Path(tempfile.mkdtemp(prefix="cw-sequence-"))
+        target=scratch/f"castworkshop-sequence-{artifact_id}.mp4"
+        try:
+            _ffmpeg_concat(paths,target)
+            response=send_file(target,mimetype="video/mp4",conditional=True,as_attachment=True,
+              download_name=f"castworkshop-sequence-{artifact_id}.mp4")
+            response.call_on_close(lambda:shutil.rmtree(scratch,ignore_errors=True))
+            return response
+        except RuntimeError:
+            shutil.rmtree(scratch,ignore_errors=True)
+            return _error("ffmpeg_unavailable","Joining the video sequence requires FFmpeg; install it or set FFMPEG_PATH.",503)
     @web.get("/api/v1/diagnostics")
     def diagnostics():
         with db_lock,get_db() as conn:
